@@ -17,9 +17,9 @@ public class ShelfInstance implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Review> reviews = new HashSet<Review>();
+    @ManyToOne
+    private Review review;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Book> books = new HashSet<Book>();
+    @ManyToOne
+    private Book book;
 }

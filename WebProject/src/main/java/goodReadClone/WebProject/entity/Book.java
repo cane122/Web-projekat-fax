@@ -34,8 +34,8 @@ public class Book implements Serializable {
     private Genre genre;
     @ManyToMany
     private Set<Author> listAuthors = new HashSet<Author>();
-    @Column
-    private String review;
+    @OneToMany
+    private Set<Review> review = new HashSet<Review>();
 
 
 

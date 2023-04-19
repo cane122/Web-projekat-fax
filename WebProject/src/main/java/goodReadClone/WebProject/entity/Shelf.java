@@ -6,6 +6,8 @@ import lombok.ToString;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -21,7 +23,7 @@ public class Shelf implements Serializable {
     @Column
     private boolean primary;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private ShelfInstance shelfInstance;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<ShelfInstance> shelfInstance = new HashSet<ShelfInstance>();
 
 }
