@@ -1,13 +1,17 @@
 package goodReadClone.WebProject.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@Setter
 public class Book implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,6 +31,7 @@ public class Book implements Serializable {
     private Genre genre;
     @Column
     private String review;
+
 
 
 }

@@ -1,5 +1,8 @@
 package goodReadClone.WebProject.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,6 +11,8 @@ enum Status {
     CONFIRMED,
     DENIED}
 @Entity
+@Getter
+@Setter
 public class Request implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
