@@ -25,7 +25,7 @@ public class User implements Serializable {
     @Column
     private String lastname;
 
-    @Column(unique = true)
+    @Column
     private String username;
 
     @Column(unique = true)
@@ -34,7 +34,7 @@ public class User implements Serializable {
     @Column
     private String password;
 
-    @Column
+    @Column(name = "date_birth")
     private LocalDate dateBirth;
 
     @Column

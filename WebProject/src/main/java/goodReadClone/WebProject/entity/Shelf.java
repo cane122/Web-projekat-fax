@@ -20,7 +20,7 @@ public class Shelf implements Serializable {
     @Column
     private String name;
 
-    @Column
+    @Column(name = "is_primary")
     private boolean primary;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
