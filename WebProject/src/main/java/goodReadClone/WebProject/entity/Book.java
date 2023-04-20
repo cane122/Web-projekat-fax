@@ -1,36 +1,41 @@
 package goodReadClone.WebProject.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@ToString
 public class Book implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String title;
     @Column
     private String image;
-    @Column
+    @Column(unique = true, nullable = false)
     private String ISBN;
     @Column(name = "date_published")
-    private LocalDate datePublished;
-    @Column
+    private Date datePublished;
+    @Column(nullable = false)
     private int pages;
     @Column
     private String description;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Genre genre;
-    @Column
-    private String review;
+    @ManyToMany
+    private Set<Author> listAuthors = new HashSet<Author>();
+    @OneToMany
+    private Set<Review> review = new HashSet<Review>();
 
 
 

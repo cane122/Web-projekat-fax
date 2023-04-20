@@ -2,8 +2,9 @@ package goodReadClone.WebProject.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 enum Status {
@@ -13,6 +14,7 @@ enum Status {
 @Entity
 @Getter
 @Setter
+@ToString
 public class Request implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +32,7 @@ public class Request implements Serializable {
     private LocalDate date;
 
     @Column
-    private Status status;
+    private Status status = Status.WAITING;
 
 
 }

@@ -2,22 +2,18 @@ package goodReadClone.WebProject.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.time.LocalDate;
 
-enum Role {
-    READER,
-    AUTHOR,
-    ADMIN
-}
-
 @Entity
+@Table(name = "user_aplication")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Getter
 @Setter
+@ToString
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +25,7 @@ public class User implements Serializable {
     @Column
     private String lastname;
 
-    @Column(unique = true)
+    @Column
     private String username;
 
     @Column(unique = true)
@@ -38,24 +34,13 @@ public class User implements Serializable {
     @Column
     private String password;
 
-    @Column
-    private LocalDate dateB;
+    @Column(name = "date_birth")
+    private LocalDate dateBirth;
 
     @Column
     private String image;
 
     @Column
     private String description;
-
-    @Column
-    private Role role;
-
-    @Column
-    private boolean active;
-
-    @Column
-    private Role list;
-
-
 
 }

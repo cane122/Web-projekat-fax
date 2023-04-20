@@ -2,13 +2,17 @@ package goodReadClone.WebProject.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@ToString
 public class Shelf implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +20,10 @@ public class Shelf implements Serializable {
     @Column
     private String name;
 
-    @Column
+    @Column(name = "is_primary")
     private boolean primary;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private ShelfInstance shelfInstance;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<ShelfInstance> shelfInstance = new HashSet<ShelfInstance>();
 
 }
