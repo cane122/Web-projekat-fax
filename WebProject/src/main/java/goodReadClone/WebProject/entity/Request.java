@@ -7,6 +7,9 @@ import lombok.ToString;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 enum Status {
     WAITING,
     CONFIRMED,
@@ -33,6 +36,9 @@ public class Request implements Serializable {
 
     @Column
     private Status status = Status.WAITING;
+
+    @OneToOne
+    private User user;
 
 
 }

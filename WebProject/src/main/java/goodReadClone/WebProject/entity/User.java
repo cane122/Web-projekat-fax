@@ -7,6 +7,8 @@ import lombok.ToString;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_aplication")
@@ -42,5 +44,8 @@ public class User implements Serializable {
 
     @Column
     private String description;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Shelf> shelf = new HashSet<Shelf>();
 
 }
