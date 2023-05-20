@@ -1,10 +1,5 @@
 package goodReadClone.WebProject.service;
 
-import goodReadClone.WebProject.DTO.AuthorDTO;
-import goodReadClone.WebProject.DTO.LoginDTO;
-import goodReadClone.WebProject.entity.Admin;
-import goodReadClone.WebProject.entity.Author;
-import goodReadClone.WebProject.entity.Reader;
 import goodReadClone.WebProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,50 +15,17 @@ public class UserService {
 
     public User findOne(Long id){
         Optional<User> foundUser = userRepository.findById(id);
-        return foundUser.orElse(null);
+        if (foundUser.isPresent())
+            return foundUser.get();
 
-    }
-
-    public boolean doesUserExist(String usernameOrEmail){
-        if(userRepository.existsByEmail(usernameOrEmail) ) {
-            return true;
-        }
-        if(userRepository.existsByUsername(usernameOrEmail)){
-            return true;
-        }
-        return false;
-    }
-
-    public User login(LoginDTO login){
-        Optional<User> user = userRepository.findByUsernameOrEmail(login.getUsernameOrEmail(),login.getUsernameOrEmail());
-        if(user.isEmpty()){
-            return null;
-        }
-        if(user.get().getPassword().equals(login.getPassword())){
-            return user.get();
-        }
         return null;
     }
+
     public List<User> findAll(){
         return userRepository.findAll();
     }
 
-    public void save(User user){
-        userRepository.save(user);
-    }
-
-    public void createAuthor(AuthorDTO authorDTO) {
-        userRepository.save(new Author(authorDTO.getName(), authorDTO.getLastname(), authorDTO.getUsername(), authorDTO.getEmail(), authorDTO.getPassword(), authorDTO.getDateBirth(), authorDTO.getImage(), authorDTO.getDescription(), false));
-    }
-
-    public String getUsersRole(User loggedUser) {
-        if (loggedUser.getClass().equals(Admin.class)) {
-            return "Admin";
-        } else if (loggedUser.getClass().equals(Reader.class)) {
-            return "Reader";
-        } else if (loggedUser.getClass().equals(Author.class)) {
-            return "Author";
-        }
-        return "User";
+    public User save(User user){
+        return userRepository.save(user);
     }
 }
