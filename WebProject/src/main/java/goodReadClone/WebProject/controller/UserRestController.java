@@ -1,7 +1,6 @@
 package goodReadClone.WebProject.controller;
 
 import goodReadClone.WebProject.entity.User;
-import goodReadClone.WebProject.repository.UserRepository;
 import goodReadClone.WebProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +17,7 @@ public class UserRestController {
     public String welcome(){
         return "Hello from api!";
     }
+
 
     @GetMapping("/api/users")
     public List<User> getUsers(){
