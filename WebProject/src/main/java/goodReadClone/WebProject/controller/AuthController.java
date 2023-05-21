@@ -2,7 +2,6 @@ package goodReadClone.WebProject.controller;
 
 import goodReadClone.WebProject.DTO.LoginDTO;
 import goodReadClone.WebProject.DTO.SignUpDTO;
-import goodReadClone.WebProject.entity.Reader;
 import goodReadClone.WebProject.entity.User;
 import goodReadClone.WebProject.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -20,10 +19,6 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDto, HttpSession session){
-        User isLogged = (User) session.getAttribute("user");
-        if(isLogged != null){
-            return new ResponseEntity<>("User already logged in", HttpStatus.BAD_REQUEST);
-        }
         if(loginDto.getUsernameOrEmail().isEmpty() || loginDto.getPassword().isEmpty())
             return new ResponseEntity<>("Invalid login data", HttpStatus.BAD_REQUEST);
 
@@ -35,17 +30,13 @@ public class AuthController {
             return new ResponseEntity<>("Wrong autentication (hacker pls don't hack)",HttpStatus.UNAUTHORIZED);
         }
         session.setAttribute("user", loggedUser);
-        session.setAttribute("user_role", userService.getUsersRole(loggedUser));
 
         return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDto, HttpSession session){
-        User isLogged = (User) session.getAttribute("user");
-        if(isLogged != null){
-            return new ResponseEntity<>("User already logged in", HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDto){
+
         // add check for username exists in a DB
         if(userService.doesUserExist(signUpDto.getUsername())){
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
@@ -57,14 +48,14 @@ public class AuthController {
         }
 
         // create user object
-        User user = new Reader();
+        User user = new User();
         user.setName(signUpDto.getName());
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
         user.setPassword(signUpDto.getPassword());
 
         userService.save(user);
-        session.setAttribute("user", user);
+
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 
     }
