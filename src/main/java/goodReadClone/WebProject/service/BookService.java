@@ -5,6 +5,7 @@ import goodReadClone.WebProject.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,5 +26,16 @@ public class BookService {
 
     public Book save(Book book){
         return bookRepository.save(book);
+    }
+
+//    public List<Book> search(String param){
+//        List<Book> temp = new ArrayList<>();
+//        for(int i = 0; i < bookRepository.findAll().size(); i++){
+//
+//        }
+//    }
+
+    public BookRepository getRepo(){
+        return bookRepository;
     }
 }
