@@ -37,6 +37,22 @@ public class Book implements Serializable {
     @OneToMany
     private Set<Review> review = new HashSet<Review>();
 
+    public Book(String title, String image, String isbn, Date datePublished, int pages, String description, Genre genre, Set<Author> listA, Set<Review> listR){
+        this.title = title;
+        this.image = image;
+        this.ISBN = isbn;
+        this.datePublished = datePublished;
+        this.pages = pages;
+        this.description = description;
+        this.genre = genre;
+        this.listAuthors = listA;
+        this.review = listR;
 
+    }
+
+    public Book(Book book) {
+        this(book.title, book.image,book.ISBN, book.datePublished, book.pages
+                , book.description,book.genre, book.listAuthors, book.review);
+    }
 
 }
