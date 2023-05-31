@@ -5,6 +5,7 @@ import goodReadClone.WebProject.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,6 +31,15 @@ public class BookController {
     @GetMapping("/api/{title}")
     public List<Book> getBooksByTitle(@PathVariable("title") String title) {
         return bookService.getRepo().findByTitleContainingIgnoreCase(title);
+    }
+
+    @PutMapping("/api/changeBook/{title}")
+    public Book changeBook(Book newB, @PathVariable("title") String title){
+
+        bookService.delete(title); //TODO Check for the dependencies on other classes
+        bookService.save(newB);
+
+        return newB;
     }
 
 }
