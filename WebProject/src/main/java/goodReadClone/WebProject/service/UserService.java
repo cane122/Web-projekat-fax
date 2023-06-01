@@ -1,6 +1,8 @@
 package goodReadClone.WebProject.service;
 
+import goodReadClone.WebProject.DTO.AuthorDTO;
 import goodReadClone.WebProject.DTO.LoginDTO;
+import goodReadClone.WebProject.entity.Author;
 import goodReadClone.WebProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +10,6 @@ import goodReadClone.WebProject.entity.User;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class UserService {
     @Autowired
@@ -46,5 +47,9 @@ public class UserService {
 
     public User save(User user){
         return userRepository.save(user);
+    }
+
+    public void createAuthor(AuthorDTO authorDTO) {
+        userRepository.save(new Author(authorDTO.getName(), authorDTO.getLastname(), authorDTO.getUsername(), authorDTO.getEmail(), authorDTO.getPassword(), authorDTO.getDateBirth(), authorDTO.getImage(), authorDTO.getDescription(), authorDTO.isActive()));
     }
 }

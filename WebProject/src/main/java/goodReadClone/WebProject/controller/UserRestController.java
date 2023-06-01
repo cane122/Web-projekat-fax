@@ -1,6 +1,8 @@
 package goodReadClone.WebProject.controller;
 
+import goodReadClone.WebProject.entity.Book;
 import goodReadClone.WebProject.entity.User;
+import goodReadClone.WebProject.service.BookService;
 import goodReadClone.WebProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,9 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BookService bookService;
 
     @GetMapping("/api/")
     public String welcome(){
@@ -35,5 +40,11 @@ public class UserRestController {
     public String saveUser(@RequestBody User user) {
         this.userService.save(user);
         return "Successfully saved an user!";
+    }
+
+    @GetMapping("/books")
+    public List<Book> getBooks(){
+        List<Book> bookList = bookService.findAll();
+        return bookList;
     }
 }

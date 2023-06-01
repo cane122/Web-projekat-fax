@@ -3,6 +3,8 @@ package goodReadClone.WebProject.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +17,11 @@ public class Author extends User {
     private boolean active;
 
     @ManyToMany(mappedBy = "listAuthors")
-    private Set<Book> listBooks = new HashSet<Book>();
+    private Set<Book> listBooks = new HashSet<>();
 
+    public Author(String name, String lastname, String username, String email, String password, LocalDate dateBirth, String image, String description, boolean active) {
+        super(name, lastname, username, email, password, dateBirth, image, description);
+        this.active = active;
+    }
+    public Author(){}
 }

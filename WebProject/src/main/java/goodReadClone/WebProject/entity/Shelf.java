@@ -24,6 +24,12 @@ public class Shelf implements Serializable {
     private boolean primary;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ShelfInstance> shelfInstance = new HashSet<ShelfInstance>();
+    private Set<ShelfInstance> shelfInstance = new HashSet<>();
 
+    public Shelf(String name, boolean primary) {
+        this.name = name;
+        this.primary = primary;
+    }
+    public Shelf (){
+    }
 }

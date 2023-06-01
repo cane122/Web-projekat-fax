@@ -1,8 +1,6 @@
 package goodReadClone.WebProject.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
@@ -19,33 +17,52 @@ import java.util.Set;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @Column
-    private String name;
+    protected String name;
 
     @Column
-    private String lastname;
+    protected String lastname;
 
     @Column
-    private String username;
+    protected String username;
 
     @Column(unique = true)
-    private String email;
+    protected String email;
 
     @Column
-    private String password;
+    protected String password;
 
     @Column(name = "date_birth")
-    private LocalDate dateBirth;
+    protected LocalDate dateBirth;
 
     @Column
-    private String image;
+    protected String image;
 
     @Column
-    private String description;
+    protected String description;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Shelf> shelf = new HashSet<Shelf>();
+    protected Set<Shelf> shelf = new HashSet<>();
 
+    public User(String name, String lastname, String username, String email, String password, LocalDate dateBirth, String image, String description) {
+        this.name = name;
+        this.lastname = lastname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.dateBirth = dateBirth;
+        this.image = image;
+        this.description = description;
+        this.shelf.add(new Shelf("Read",true));
+        this.shelf.add(new Shelf("Currently Reading",true));
+        this.shelf.add(new Shelf("Want to Read",true));
+    }
+
+    public User() {
+        this.shelf.add(new Shelf("Read",true));
+        this.shelf.add(new Shelf("Currently Reading",true));
+        this.shelf.add(new Shelf("Want to Read",true));
+    }
 }
