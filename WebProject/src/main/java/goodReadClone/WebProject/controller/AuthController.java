@@ -2,6 +2,7 @@ package goodReadClone.WebProject.controller;
 
 import goodReadClone.WebProject.DTO.LoginDTO;
 import goodReadClone.WebProject.DTO.SignUpDTO;
+import goodReadClone.WebProject.entity.Reader;
 import goodReadClone.WebProject.entity.User;
 import goodReadClone.WebProject.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -34,6 +35,7 @@ public class AuthController {
             return new ResponseEntity<>("Wrong autentication (hacker pls don't hack)",HttpStatus.UNAUTHORIZED);
         }
         session.setAttribute("user", loggedUser);
+        session.setAttribute("user_role", userService.getUsersRole(loggedUser));
 
         return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
     }
@@ -55,7 +57,7 @@ public class AuthController {
         }
 
         // create user object
-        User user = new User();
+        User user = new Reader();
         user.setName(signUpDto.getName());
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
