@@ -2,7 +2,9 @@ package goodReadClone.WebProject.service;
 
 import goodReadClone.WebProject.DTO.AuthorDTO;
 import goodReadClone.WebProject.DTO.LoginDTO;
+import goodReadClone.WebProject.entity.Admin;
 import goodReadClone.WebProject.entity.Author;
+import goodReadClone.WebProject.entity.Reader;
 import goodReadClone.WebProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,11 +47,22 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User save(User user){
-        return userRepository.save(user);
+    public void save(User user){
+        userRepository.save(user);
     }
 
     public void createAuthor(AuthorDTO authorDTO) {
-        userRepository.save(new Author(authorDTO.getName(), authorDTO.getLastname(), authorDTO.getUsername(), authorDTO.getEmail(), authorDTO.getPassword(), authorDTO.getDateBirth(), authorDTO.getImage(), authorDTO.getDescription(), authorDTO.isActive()));
+        userRepository.save(new Author(authorDTO.getName(), authorDTO.getLastname(), authorDTO.getUsername(), authorDTO.getEmail(), authorDTO.getPassword(), authorDTO.getDateBirth(), authorDTO.getImage(), authorDTO.getDescription(), false));
+    }
+
+    public String getUsersRole(User loggedUser) {
+        if (loggedUser.getClass().equals(Admin.class)) {
+            return "Admin";
+        } else if (loggedUser.getClass().equals(Reader.class)) {
+            return "Reader";
+        } else if (loggedUser.getClass().equals(Author.class)) {
+            return "Author";
+        }
+        return "User";
     }
 }
