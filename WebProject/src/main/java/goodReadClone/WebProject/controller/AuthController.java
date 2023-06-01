@@ -19,6 +19,10 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDto, HttpSession session){
+        User isLogged = (User) session.getAttribute("user");
+        if(isLogged != null){
+            return new ResponseEntity<>("User already logged in", HttpStatus.BAD_REQUEST);
+        }
         if(loginDto.getUsernameOrEmail().isEmpty() || loginDto.getPassword().isEmpty())
             return new ResponseEntity<>("Invalid login data", HttpStatus.BAD_REQUEST);
 
@@ -35,8 +39,11 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDto){
-
+    public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDto, HttpSession session){
+        User isLogged = (User) session.getAttribute("user");
+        if(isLogged != null){
+            return new ResponseEntity<>("User already logged in", HttpStatus.BAD_REQUEST);
+        }
         // add check for username exists in a DB
         if(userService.doesUserExist(signUpDto.getUsername())){
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
@@ -55,7 +62,7 @@ public class AuthController {
         user.setPassword(signUpDto.getPassword());
 
         userService.save(user);
-
+        session.setAttribute("user", user);
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 
     }

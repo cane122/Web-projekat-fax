@@ -30,4 +30,7 @@ public class AuthorDTO {
 
     @Column
     protected String description;
+
+    @Column
+    protected boolean active;
 }
