@@ -44,7 +44,7 @@ public class User implements Serializable {
     protected String description;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    protected Set<Shelf> shelf = new HashSet<>();
+    protected Set<Shelf> shelfs = new HashSet<>();
 
     public User(String name, String lastname, String username, String email, String password, LocalDate dateBirth, String image, String description) {
         this.name = name;
@@ -55,14 +55,14 @@ public class User implements Serializable {
         this.dateBirth = dateBirth;
         this.image = image;
         this.description = description;
-        this.shelf.add(new Shelf("Read",true));
-        this.shelf.add(new Shelf("Currently Reading",true));
-        this.shelf.add(new Shelf("Want to Read",true));
+        this.shelfs.add(new Shelf("Read",true));
+        this.shelfs.add(new Shelf("Currently Reading",true));
+        this.shelfs.add(new Shelf("Want to Read",true));
     }
 
     public User() {
-        this.shelf.add(new Shelf("Read",true));
-        this.shelf.add(new Shelf("Currently Reading",true));
-        this.shelf.add(new Shelf("Want to Read",true));
+        this.shelfs.add(new Shelf("Read",true));
+        this.shelfs.add(new Shelf("Currently Reading",true));
+        this.shelfs.add(new Shelf("Want to Read",true));
     }
 }

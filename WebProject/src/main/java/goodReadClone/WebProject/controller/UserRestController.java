@@ -1,6 +1,6 @@
 package goodReadClone.WebProject.controller;
 
-import goodReadClone.WebProject.entity.Book;
+import goodReadClone.WebProject.entity.Shelf;
 import goodReadClone.WebProject.entity.User;
 import goodReadClone.WebProject.service.BookService;
 import goodReadClone.WebProject.service.UserService;
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class UserRestController {
@@ -30,21 +31,16 @@ public class UserRestController {
         return userList;
     }
 
+    @GetMapping("/api/users/{id}/shelfs/")
+    public Set<Shelf> getShelfs(@PathVariable(name = "id") Long id){
+        User user = userService.findOne(id);
+        return user.getShelfs();
+    }
+
     @GetMapping("/api/users/{id}")
-    public User getuser(@PathVariable(name = "id") Long id){
+    public User getUser(@PathVariable(name = "id") Long id){
         User user = userService.findOne(id);
         return user;
     }
 
-    @PostMapping("/api/save-user")
-    public String saveUser(@RequestBody User user) {
-        this.userService.save(user);
-        return "Successfully saved an user!";
-    }
-
-    @GetMapping("/books")
-    public List<Book> getBooks(){
-        List<Book> bookList = bookService.findAll();
-        return bookList;
-    }
 }

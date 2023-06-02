@@ -33,10 +33,20 @@ public class Book implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Genre genre;
     @ManyToMany
-    private Set<Author> listAuthors = new HashSet<Author>();
+    private Set<Author> listAuthors = new HashSet<>();
     @OneToMany
-    private Set<Review> review = new HashSet<Review>();
+    private Set<Review> reviews = new HashSet<>();
 
-
-
+    public Book(Long id, String title, String image, String ISBN, Date datePublished, int pages, String description, Genre genre, Set<Author> listAuthors) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.ISBN = ISBN;
+        this.datePublished = datePublished;
+        this.pages = pages;
+        this.description = description;
+        this.genre = genre;
+        this.listAuthors = listAuthors;
+    }
+    public Book(){}
 }

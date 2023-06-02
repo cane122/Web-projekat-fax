@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,15 +58,23 @@ public class AuthController {
         }
 
         // create user object
-        User user = new Reader();
+        Reader user = new Reader();
         user.setName(signUpDto.getName());
+        user.setLastname(signUpDto.getLastname());
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
         user.setPassword(signUpDto.getPassword());
 
         userService.save(user);
         session.setAttribute("user", user);
+        session.setAttribute("user_type", "Reader");
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+    }
 
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout( HttpSession session){
+        session.setAttribute("user",null);
+        session.setAttribute("user_type",null);
+        return new ResponseEntity<>("Uspesno odjavljen", HttpStatus.OK);
     }
 }
