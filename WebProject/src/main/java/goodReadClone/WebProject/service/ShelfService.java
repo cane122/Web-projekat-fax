@@ -35,4 +35,8 @@ public class ShelfService {
         shelfRepository.save(polica);
         return polica;
     }
+
+    public void save(Shelf shelf) {
+        shelfRepository.save(shelf);
+    }
 }

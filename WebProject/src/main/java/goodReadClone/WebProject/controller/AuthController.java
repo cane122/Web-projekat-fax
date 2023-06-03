@@ -25,7 +25,7 @@ public class AuthController {
         if(isLogged != null){
             return new ResponseEntity<>("User already logged in", HttpStatus.BAD_REQUEST);
         }
-        if(loginDto.getUsernameOrEmail().isEmpty() || loginDto.getPassword().isEmpty())
+        if(loginDto.getUsernameOrEmail() == null || loginDto.getPassword() == null || loginDto.getUsernameOrEmail().isBlank() || loginDto.getPassword().isBlank())
             return new ResponseEntity<>("Invalid login data", HttpStatus.BAD_REQUEST);
 
         if(!userService.doesUserExist(loginDto.getUsernameOrEmail())){

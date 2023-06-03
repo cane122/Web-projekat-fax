@@ -34,4 +34,8 @@ public class Shelf implements Serializable {
     }
     public Shelf (){
     }
+
+    public void delete(ShelfInstance si) {
+        shelfInstance.remove(si);
+    }
 }

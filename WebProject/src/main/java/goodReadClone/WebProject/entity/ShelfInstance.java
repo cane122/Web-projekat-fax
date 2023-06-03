@@ -22,4 +22,10 @@ public class ShelfInstance implements Serializable {
 
     @ManyToOne
     private Book book;
+
+    public ShelfInstance(Book book) {
+        this.book = book;
+    }
+    public ShelfInstance() {
+    }
 }
