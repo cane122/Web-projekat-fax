@@ -32,7 +32,7 @@ public class UserRestController {
     }
 
     @GetMapping("/api/users/{id}/shelfs/")
-    public Set<Shelf> getShelfs(@PathVariable(name = "id") Long id){
+    public Set<Shelf> getShelvesFromUser(@PathVariable(name = "id") Long id){
         User user = userService.findOne(id);
         return user.getShelfs();
     }

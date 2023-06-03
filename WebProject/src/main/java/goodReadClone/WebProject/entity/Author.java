@@ -19,9 +19,9 @@ public class Author extends User {
     @ManyToMany(mappedBy = "listAuthors")
     private Set<Book> listBooks = new HashSet<>();
 
-    public Author(String name, String lastname, String username, String email, String password, LocalDate dateBirth, String image, String description, boolean active) {
+    public Author(String name, String lastname, String username, String email, String password, LocalDate dateBirth, String image, String description) {
         super(name, lastname, username, email, password, dateBirth, image, description);
-        this.active = active;
+        this.active = false;
     }
     public Author(){}
 }

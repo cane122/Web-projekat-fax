@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +25,7 @@ public class Shelf implements Serializable {
     @Column(name = "is_primary")
     private boolean primary;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ShelfInstance> shelfInstance = new HashSet<>();
 
     public Shelf(String name, boolean primary) {

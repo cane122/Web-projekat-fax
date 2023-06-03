@@ -2,16 +2,14 @@ package goodReadClone.WebProject.service;
 
 import goodReadClone.WebProject.DTO.AuthorDTO;
 import goodReadClone.WebProject.DTO.LoginDTO;
-import goodReadClone.WebProject.entity.Admin;
-import goodReadClone.WebProject.entity.Author;
-import goodReadClone.WebProject.entity.Reader;
+import goodReadClone.WebProject.entity.*;
 import goodReadClone.WebProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import goodReadClone.WebProject.entity.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -53,7 +51,7 @@ public class UserService {
     }
 
     public void createAuthor(AuthorDTO authorDTO) {
-        userRepository.save(new Author(authorDTO.getName(), authorDTO.getLastname(), authorDTO.getUsername(), authorDTO.getEmail(), authorDTO.getPassword(), authorDTO.getDateBirth(), authorDTO.getImage(), authorDTO.getDescription(), false));
+        userRepository.save(new Author(authorDTO.getName(), authorDTO.getLastname(), authorDTO.getUsername(), authorDTO.getEmail(), authorDTO.getPassword(), authorDTO.getDateBirth(), authorDTO.getImage(), authorDTO.getDescription()));
     }
 
     public String getUsersRole(User loggedUser) {
@@ -66,4 +64,10 @@ public class UserService {
         }
         return "User";
     }
+    public void delteShelf(User user){
+    }
+    public Set<Shelf> getShelves(User user) {
+        return user.getShelfs();
+    }
+
 }

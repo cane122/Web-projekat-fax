@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class User implements Serializable {
+    public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -43,7 +43,7 @@ public class User implements Serializable {
     @Column
     protected String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     protected Set<Shelf> shelfs = new HashSet<>();
 
     public User(String name, String lastname, String username, String email, String password, LocalDate dateBirth, String image, String description) {
@@ -64,5 +64,22 @@ public class User implements Serializable {
         this.shelfs.add(new Shelf("Read",true));
         this.shelfs.add(new Shelf("Currently Reading",true));
         this.shelfs.add(new Shelf("Want to Read",true));
+    }
+
+    public Shelf getShelfById(Long id) {
+        for (Shelf shelf: shelfs) {
+            if(shelf.getId().equals(id)){
+                return shelf;
+            }
+        }
+        return null;
+    }
+
+    public Shelf removeShelf(Shelf shelf){
+        shelfs.remove(shelf);
+        return shelf;
+    }
+    public void addShelf(Shelf createdShelf) {
+        shelfs.add(createdShelf);
     }
 }
