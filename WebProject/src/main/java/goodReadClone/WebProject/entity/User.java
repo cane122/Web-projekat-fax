@@ -43,7 +43,7 @@ import java.util.Set;
     @Column
     protected String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     protected Set<Shelf> shelfs = new HashSet<>();
 
     public User(String name, String lastname, String username, String email, String password, LocalDate dateBirth, String image, String description) {
@@ -77,6 +77,13 @@ import java.util.Set;
 
     public Shelf removeShelf(Shelf shelf){
         shelfs.remove(shelf);
+        Set<Shelf> newS = new HashSet<>();
+        for(Shelf s: shelfs){
+            if(!s.getId().equals(shelf.getId())){
+                newS.add(s);
+            }
+        }
+        shelfs = newS;
         return shelf;
     }
     public void addShelf(Shelf createdShelf) {

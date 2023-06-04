@@ -1,6 +1,7 @@
 package goodReadClone.WebProject.controller;
 
 import goodReadClone.WebProject.entity.*;
+import goodReadClone.WebProject.DTO.ReviewDTO;
 import goodReadClone.WebProject.service.BookService;
 import goodReadClone.WebProject.service.ShelfInstanceService;
 import goodReadClone.WebProject.service.ShelfService;
@@ -74,8 +75,10 @@ public class ShelfController {
         if(bookOnPrimary == 0 && shelf.isPrimary() != true){
             return new ResponseEntity<>("Ne moze jer nema je na primarnom",HttpStatus.BAD_REQUEST);
         }
-        shelf.getShelfInstance().add(new ShelfInstance(book.get()));
-        shelfService.save(shelf);
+        ShelfInstance si = new ShelfInstance(book.get());
+        shelf.getShelfInstance().add(si);
+        Shelf newShelf = shelfService.save(shelf);
+        si = shelfInstanceService.save(si);
         return new ResponseEntity<>("Uspesno dodata knjiga na policu",HttpStatus.OK);
     }
     @DeleteMapping("/{id_shelf}/deleteBook/{id_book}")
@@ -103,18 +106,42 @@ public class ShelfController {
                 for(ShelfInstance si: s.getShelfInstance()){
                     Book knjiga =si.getBook();
                     if(knjiga.getId() == id_book){
+                        Long id_toDelete = si.getId();
                         s.delete(si);
+                        session.setAttribute("user",user);
+                        userService.save(user);
                         shelfService.save(s);
-                        shelfInstanceService.delete(si);
+                        shelfInstanceService.delete(si.getId());
                     }
                 }
             }
             return new ResponseEntity<>("Uspesno izbrisana knjiga iz police",HttpStatus.OK);
-
         }
-        shelf.delete();
+            ShelfInstance obrisi = shelf.getShelfInstanceByBookId(id_book);
+            if(obrisi == null){
+                return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
+            }
+            shelf.deleteInstanceByBookId(id_book);
+            session.setAttribute("user",user);
+            shelfService.save(shelf);
+
+            return new ResponseEntity<>("Uspesno izbrisana knjiga iz police", HttpStatus.OK);
+        }
+
+    @PutMapping("/{id_shelf}/addreview/{instance_id}")
+    public ResponseEntity addReview(@PathVariable("id_shelf") Long id_shelf,@RequestBody ReviewDTO review, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        Shelf shelf = user.getShelfById(id_shelf);
+        Review reviewToBeAdded = new Review(review.getText(), review.getGrade(), review.getReviewDate());
+        if(shelf == null || review == null){
+            return new ResponseEntity<>("Ne postoji polica ili review", HttpStatus.BAD_REQUEST);
+        }
+        shelf.find
+        session.setAttribute("user",user);
         shelfService.save(shelf);
-        return new ResponseEntity<>("Uspesno izbrisana knjiga iz police",HttpStatus.OK);
+
+        return new ResponseEntity<>("Uspesno izbrisana knjiga iz police", HttpStatus.OK);
+    }
     }
 
 }

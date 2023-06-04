@@ -27,4 +27,10 @@ public class Review implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
 
+    public Review(String text, int grade, LocalDate reviewDate) {
+        this.text = text;
+        this.grade = grade;
+        this.reviewDate = reviewDate;
+    }
+    public Review(){}
 }

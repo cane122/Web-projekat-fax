@@ -25,7 +25,7 @@ public class Shelf implements Serializable {
     @Column(name = "is_primary")
     private boolean primary;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ShelfInstance> shelfInstance = new HashSet<>();
 
     public Shelf(String name, boolean primary) {
@@ -37,5 +37,29 @@ public class Shelf implements Serializable {
 
     public void delete(ShelfInstance si) {
         shelfInstance.remove(si);
+        Set<ShelfInstance> newSI = new HashSet<>();
+        for(ShelfInstance siTemp: shelfInstance){
+            if(!siTemp.getId().equals(si.getId())){
+                newSI.add(siTemp);
+            }
+        }
+        shelfInstance = newSI;
+    }
+
+    public void deleteInstanceByBookId(Long idBook) {
+        for(ShelfInstance si : shelfInstance){
+            if(si.getBook().getId().equals(idBook)){
+                shelfInstance.remove(si);
+            }
+        }
+    }
+
+    public ShelfInstance getShelfInstanceByBookId(Long idBook) {
+        for(ShelfInstance si: shelfInstance){
+            if(si.getBook().equals(idBook)){
+                return si;
+            }
+        }
+        return null;
     }
 }

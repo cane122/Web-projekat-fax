@@ -19,7 +19,6 @@ public class ShelfInstance implements Serializable {
     private Long id;
     @ManyToOne
     private Review review;
-
     @ManyToOne
     private Book book;
 

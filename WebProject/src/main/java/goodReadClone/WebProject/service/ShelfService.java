@@ -36,7 +36,7 @@ public class ShelfService {
         return polica;
     }
 
-    public void save(Shelf shelf) {
-        shelfRepository.save(shelf);
+    public Shelf save(Shelf shelf) {
+        return shelfRepository.saveAndFlush(shelf);
     }
 }

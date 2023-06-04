@@ -70,4 +70,7 @@ public class UserService {
         return user.getShelfs();
     }
 
+    public void delete(User user) {
+        userRepository.delete(user);
+    }
 }

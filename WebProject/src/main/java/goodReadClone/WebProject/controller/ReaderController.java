@@ -7,13 +7,14 @@ import goodReadClone.WebProject.service.ReaderService;
 import goodReadClone.WebProject.service.ShelfService;
 import goodReadClone.WebProject.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
-
+@Transactional
 @RestController
 @RequestMapping("/reader")
 public class ReaderController {
