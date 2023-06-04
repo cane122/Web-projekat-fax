@@ -70,4 +70,32 @@ public class ReaderController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("shelves/edit/{shelf_id}")
+    public ResponseEntity<Shelf> editShelf (@RequestBody ShelfDTO shelf, @PathVariable Long shelf_id, HttpSession session) {
+        String user_type = (String) session.getAttribute("user_type");
+        if(user_type == null || !user_type.equals("Reader")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        if(shelfService.findById(shelf_id).isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        User user = (User) session.getAttribute("user");
+        try {
+            Shelf createdShelf = shelfService.findById(shelf_id).get();
+            if(createdShelf.isPrimary()){
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+            createdShelf.setId(shelf_id);
+            createdShelf.setName(shelf.getName());
+            createdShelf.setShelfInstance(user.getShelfById(shelf_id).getShelfInstance());
+            createdShelf.setPrimary(user.getShelfById(shelf_id).isPrimary());
+            user.editShelf(createdShelf);
+            session.setAttribute("user", user);
+            shelfService.save(createdShelf);
+            return new ResponseEntity<>(createdShelf, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -39,4 +39,8 @@ public class ShelfService {
     public Shelf save(Shelf shelf) {
         return shelfRepository.saveAndFlush(shelf);
     }
+
+    public Optional<Shelf> findById(Long shelfId) {
+        return shelfRepository.findById(shelfId);
+    }
 }

@@ -21,4 +21,8 @@ public class ReviewService {
     public Optional<Review> findById(Long id) {
         return reviewRepository.findById(id);
     }
+
+    public void save(Review reviewToBeAdded) {
+        reviewRepository.save(reviewToBeAdded);
+    }
 }

@@ -2,10 +2,7 @@ package goodReadClone.WebProject.controller;
 
 import goodReadClone.WebProject.entity.*;
 import goodReadClone.WebProject.DTO.ReviewDTO;
-import goodReadClone.WebProject.service.BookService;
-import goodReadClone.WebProject.service.ShelfInstanceService;
-import goodReadClone.WebProject.service.ShelfService;
-import goodReadClone.WebProject.service.UserService;
+import goodReadClone.WebProject.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/shelves")
@@ -30,6 +24,8 @@ public class ShelfController {
     private BookService bookService;
     @Autowired
     private ShelfInstanceService shelfInstanceService;
+    @Autowired
+    private ReviewService reviewService;
 
     @PutMapping("/api/addBook")
     public Boolean addBook(){
@@ -47,7 +43,7 @@ public class ShelfController {
         if(user == null){
             return null;
         }
-        return userService.getShelves(user);
+        return user.getShelfs();
     }
     @PutMapping("/{id_shelf}/putBook/{id_book}")
     public ResponseEntity<String> putBookOnShelf(@PathVariable("id_shelf") Long id_shelf,@PathVariable("id_book") Long id_book, HttpSession session){
@@ -128,20 +124,27 @@ public class ShelfController {
             return new ResponseEntity<>("Uspesno izbrisana knjiga iz police", HttpStatus.OK);
         }
 
-    @PutMapping("/{id_shelf}/addreview/{instance_id}")
-    public ResponseEntity addReview(@PathVariable("id_shelf") Long id_shelf,@RequestBody ReviewDTO review, HttpSession session){
+    @PutMapping("/{id_shelf}/addreview/{id_shelfInstance}")
+    public ResponseEntity addReview(@PathVariable("id_shelf") Long id_shelf, @PathVariable("id_shelfInstance") Long id_shelfInstance, @RequestBody ReviewDTO review, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Shelf shelf = user.getShelfById(id_shelf);
+        ShelfInstance shelfInstance = shelf.getShelfInstancefById(id_shelfInstance);
         Review reviewToBeAdded = new Review(review.getText(), review.getGrade(), review.getReviewDate());
-        if(shelf == null || review == null){
+        if (user == null) {
+            return new ResponseEntity<>("Nisi prijavljen", HttpStatus.UNAUTHORIZED);
+        }
+        if (shelf == null || review == null) {
             return new ResponseEntity<>("Ne postoji polica ili review", HttpStatus.BAD_REQUEST);
         }
-        shelf.find
-        session.setAttribute("user",user);
+        if (shelfInstance == null) {
+            return new ResponseEntity<>("nije nadjen shelf", HttpStatus.BAD_REQUEST);
+        }
+        shelfInstance.addReview(reviewToBeAdded);
+        reviewService.save(reviewToBeAdded);
+        session.setAttribute("user", user);
         shelfService.save(shelf);
 
-        return new ResponseEntity<>("Uspesno izbrisana knjiga iz police", HttpStatus.OK);
-    }
+        return new ResponseEntity<>("Uspesno dodat review", HttpStatus.OK);
     }
 
 }

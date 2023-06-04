@@ -1,5 +1,6 @@
 package goodReadClone.WebProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -43,7 +44,7 @@ import java.util.Set;
     @Column
     protected String description;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     protected Set<Shelf> shelfs = new HashSet<>();
 
     public User(String name, String lastname, String username, String email, String password, LocalDate dateBirth, String image, String description) {
@@ -88,5 +89,14 @@ import java.util.Set;
     }
     public void addShelf(Shelf createdShelf) {
         shelfs.add(createdShelf);
+    }
+
+    public void editShelf(Shelf shelf) {
+        for(Shelf s: shelfs){
+            if(s.getId().equals(shelf.getId())){
+                s.setName(shelf.getName());
+            }
+        }
+
     }
 }

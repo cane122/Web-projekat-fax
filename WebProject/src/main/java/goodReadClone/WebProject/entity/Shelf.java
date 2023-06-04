@@ -47,16 +47,27 @@ public class Shelf implements Serializable {
     }
 
     public void deleteInstanceByBookId(Long idBook) {
+        Set<ShelfInstance> siSet = new HashSet<>();
         for(ShelfInstance si : shelfInstance){
-            if(si.getBook().getId().equals(idBook)){
-                shelfInstance.remove(si);
+            if(!si.getBook().getId().equals(idBook)){
+                siSet.add(si);
             }
         }
+        shelfInstance = siSet;
     }
 
     public ShelfInstance getShelfInstanceByBookId(Long idBook) {
         for(ShelfInstance si: shelfInstance){
             if(si.getBook().equals(idBook)){
+                return si;
+            }
+        }
+        return null;
+    }
+
+    public ShelfInstance getShelfInstancefById(Long idShelfInstance) {
+        for(ShelfInstance si: shelfInstance){
+            if(idShelfInstance.equals(si.getId())){
                 return si;
             }
         }

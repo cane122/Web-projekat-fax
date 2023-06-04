@@ -4,9 +4,11 @@ import goodReadClone.WebProject.DTO.AuthorDTO;
 import goodReadClone.WebProject.DTO.LoginDTO;
 import goodReadClone.WebProject.entity.*;
 import goodReadClone.WebProject.repository.UserRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -67,6 +69,10 @@ public class UserService {
     public void delteShelf(User user){
     }
     public Set<Shelf> getShelves(User user) {
+        Set<Shelf> results = user.getShelfs();
+        for(Shelf s: results) {
+            Hibernate.initialize(s.getShelfInstance());
+        }
         return user.getShelfs();
     }
 
