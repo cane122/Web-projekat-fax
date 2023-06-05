@@ -36,6 +36,10 @@ public class ReviewController {
     }
     @PutMapping("/user/edit/review/{id_shelfInstance}")
     public ResponseEntity editReview(@PathVariable Long id_shelfInstance, @RequestBody ReviewDTO reviewDTO, HttpSession session){
+        String user_type = (String) session.getAttribute("user_type");
+        if(user_type == null || user_type.equals("Admin")){
+            return new ResponseEntity<>("Not Reader", HttpStatus.UNAUTHORIZED);
+        }
         User isLogged = (User) session.getAttribute("user");
         if(isLogged == null){
             return new ResponseEntity<>("User not logged in", HttpStatus.BAD_REQUEST);
@@ -56,6 +60,10 @@ public class ReviewController {
     }
     @DeleteMapping("/user/delete/review/{id_shelfInstance}")
     public ResponseEntity editReview(@PathVariable Long id_shelfInstance, HttpSession session){
+        String user_type = (String) session.getAttribute("user_type");
+        if(user_type == null || user_type.equals("Admin")){
+            return new ResponseEntity<>("Not Reader", HttpStatus.UNAUTHORIZED);
+        }
         User isLogged = (User) session.getAttribute("user");
         if(isLogged == null){
             return new ResponseEntity<>("User not logged in", HttpStatus.BAD_REQUEST);

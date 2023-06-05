@@ -20,4 +20,9 @@ public class Genre implements Serializable {
     @Column(nullable = false, unique = true)
     private String name;
 
+    public Genre(String genreName) {
+    this.name =genreName;
+    }
+    public Genre() {
+    }
 }

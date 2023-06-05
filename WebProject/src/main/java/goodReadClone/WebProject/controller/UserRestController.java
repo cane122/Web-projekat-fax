@@ -50,6 +50,10 @@ public class UserRestController {
 
     @PutMapping("/user/update")
     public ResponseEntity updateUser(@RequestBody UserDTO userDTO, HttpSession session){
+        String user_type = (String) session.getAttribute("user_type");
+        if(user_type == null || user_type.equals("Admin")){
+            return new ResponseEntity<>("Not Reader", HttpStatus.UNAUTHORIZED);
+        }
         User isLogged = (User) session.getAttribute("user");
         if(isLogged == null){
             return new ResponseEntity<>("User not logged in", HttpStatus.BAD_REQUEST);

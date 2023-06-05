@@ -60,7 +60,14 @@ public class BookController {
     }
 
     @PutMapping("/api/changeBook/{id}")
-    public Book changeBook(BookDTO newB, @PathVariable("id") Long id){
+    public Book changeBook(BookDTO newB, @PathVariable("id") Long id, HttpSession session){
+        String userRole = (String) session.getAttribute("user_type");
+        if(userRole == null){
+            return null;
+        }
+        if(!userRole.equals("Author") && !userRole.equals("Admin")){
+            return null;
+        }
         Set<Author> authors = new HashSet<>();
         for(String auth: newB.getAuthors()){
             authors.add(authorService.findByUsername(auth));
@@ -70,7 +77,8 @@ public class BookController {
 
         return book;
     }
-
+    //TODO SKOntati sta je ovo i sto nam ne treba
+    /*
     @PutMapping("shelf/{id_shelf}/editBook/{id_book}")
     public ResponseEntity<String> editBookOnShelf(@PathVariable("id_shelf") Long id_shelf, @PathVariable("id_book") Long id_book, @RequestBody BookDTO bookdto, HttpSession session){
         User user = (User) session.getAttribute("user");
@@ -91,11 +99,12 @@ public class BookController {
         shelfService.save(shelf);
         return new ResponseEntity<>("Uspesno dodata knjiga na policu",HttpStatus.OK);
     }
+    */
     @PostMapping("/book/addBook/")
     public ResponseEntity<Book> addBookToRepository(@RequestBody BookDTO book, HttpSession session){
         User user = (User) session.getAttribute("user");
         String user_type = (String) session.getAttribute("user_type");
-        if(user_type == null || !user_type.equals("Author")){
+        if(user_type == null || user_type.equals("Reader")){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         Set<Author> authors = new HashSet<>();

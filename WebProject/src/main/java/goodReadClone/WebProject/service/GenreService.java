@@ -26,4 +26,8 @@ public class GenreService {
     public void save(Genre genre){
         genreRepository.save(genre);
     }
+
+    public void saveByName(String genreName) {
+        genreRepository.save(new Genre(genreName));
+    }
 }

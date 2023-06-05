@@ -48,6 +48,10 @@ public class ShelfController {
     @PutMapping("/{id_shelf}/putBook/{id_book}")
     public ResponseEntity<String> putBookOnShelf(@PathVariable("id_shelf") Long id_shelf,@PathVariable("id_book") Long id_book, HttpSession session){
         User user = (User) session.getAttribute("user");
+        String user_type = (String) session.getAttribute("user_type");
+        if(user_type == null || user_type.equals("Admin")){
+            return new ResponseEntity<>("Not Reader", HttpStatus.UNAUTHORIZED);
+        }
         Shelf shelf = user.getShelfById(id_shelf);
         Optional<Book> book = bookService.findById(id_book);
         if(shelf == null || book.isEmpty()){
@@ -80,6 +84,10 @@ public class ShelfController {
     @DeleteMapping("/{id_shelf}/deleteBook/{id_book}")
     public ResponseEntity<String> deleteBookOnShelf(@PathVariable("id_shelf") Long id_shelf,@PathVariable("id_book") Long id_book, HttpSession session){
         User user = (User) session.getAttribute("user");
+        String user_type = (String) session.getAttribute("user_type");
+        if(user_type == null || user_type.equals("Admin")){
+            return new ResponseEntity<>("Not Reader", HttpStatus.UNAUTHORIZED);
+        }
         Shelf shelf = user.getShelfById(id_shelf);
         Optional<Book> book = bookService.findById(id_book);
         if(shelf == null || book.isEmpty()){
@@ -132,6 +140,10 @@ public class ShelfController {
         Review reviewToBeAdded = new Review(review.getText(), review.getGrade(), review.getReviewDate());
         if (user == null) {
             return new ResponseEntity<>("Nisi prijavljen", HttpStatus.UNAUTHORIZED);
+        }
+        String user_type = (String) session.getAttribute("user_type");
+        if(user_type == null || user_type.equals("Admin")){
+            return new ResponseEntity<>("Not Reader", HttpStatus.UNAUTHORIZED);
         }
         if (shelf == null || review == null) {
             return new ResponseEntity<>("Ne postoji polica ili review", HttpStatus.BAD_REQUEST);

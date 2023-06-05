@@ -28,7 +28,7 @@ public class ReaderController {
     @DeleteMapping("/shelves/remove/{id}")
     public ResponseEntity<String> deleteShelf(@PathVariable("id") Long id, HttpSession session) {
         String user_type = (String) session.getAttribute("user_type");
-        if(user_type == null || !user_type.equals("Reader")){
+        if(user_type == null || user_type.equals("Admin")){
             return new ResponseEntity<>("Nisi citalac", HttpStatus.UNAUTHORIZED);
         }
         User user = (User) session.getAttribute("user");
@@ -53,7 +53,7 @@ public class ReaderController {
     @PostMapping("shelves/add")
     public ResponseEntity<Shelf> createShelf(@RequestBody ShelfDTO shelf, HttpSession session) {
         String user_type = (String) session.getAttribute("user_type");
-        if(user_type == null || !user_type.equals("Reader")){
+        if(user_type == null || user_type.equals("Admin")){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         if(shelfService.findByName(shelf.getName()) != null){
@@ -74,7 +74,7 @@ public class ReaderController {
     @PutMapping("shelves/edit/{shelf_id}")
     public ResponseEntity<Shelf> editShelf (@RequestBody ShelfDTO shelf, @PathVariable Long shelf_id, HttpSession session) {
         String user_type = (String) session.getAttribute("user_type");
-        if(user_type == null || !user_type.equals("Reader")){
+        if(user_type == null || user_type.equals("Admin")){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         if(shelfService.findById(shelf_id).isEmpty()){
