@@ -12,7 +12,7 @@ public class BookDTO {
 
     private String image;
 
-    private String ISBN;
+    private String isbn;
 
     private Date datePublished;
 

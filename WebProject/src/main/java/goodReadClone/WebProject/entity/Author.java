@@ -1,5 +1,6 @@
 package goodReadClone.WebProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class Author extends User {
     private boolean active;
 
     @ManyToMany(mappedBy = "listAuthors")
+    @JsonBackReference
     private Set<Book> listBooks = new HashSet<>();
 
     public Author(String name, String lastname, String username, String email, String password, LocalDate dateBirth, String image, String description) {

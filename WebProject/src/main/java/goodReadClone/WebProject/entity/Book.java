@@ -1,5 +1,7 @@
 package goodReadClone.WebProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +35,7 @@ public class Book implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Genre genre;
     @ManyToMany
+    @JsonManagedReference
     private Set<Author> listAuthors = new HashSet<>();
     @OneToMany
     private Set<Review> reviews = new HashSet<>();
@@ -49,4 +52,15 @@ public class Book implements Serializable {
         this.listAuthors = listAuthors;
     }
     public Book(){}
+
+    public Book(String title, String image, String ISBN, Date datePublished, int pages, String description, Genre genre, Set<Author> listAuthors) {
+        this.title = title;
+        this.image = image;
+        this.ISBN = ISBN;
+        this.datePublished = datePublished;
+        this.pages = pages;
+        this.description = description;
+        this.genre = genre;
+        this.listAuthors = listAuthors;
+    }
 }

@@ -18,7 +18,7 @@ public class AdminController {
 
     @PostMapping("/admin/createauthor")
     public ResponseEntity<String> createAuthor(@RequestBody AuthorDTO authorDTO, HttpSession session){
-        String userRole = (String) session.getAttribute("user_role");
+        String userRole = (String) session.getAttribute("user_type");
         if(!userRole.equals("Admin")){
             return new ResponseEntity<>("You don't have admin privilages", HttpStatus.UNAUTHORIZED);
         }

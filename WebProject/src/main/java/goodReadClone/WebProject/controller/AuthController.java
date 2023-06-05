@@ -36,7 +36,7 @@ public class AuthController {
             return new ResponseEntity<>("Wrong autentication (hacker pls don't hack)",HttpStatus.UNAUTHORIZED);
         }
         session.setAttribute("user", loggedUser);
-        session.setAttribute("user_role", userService.getUsersRole(loggedUser));
+        session.setAttribute("user_type", userService.getUsersRole(loggedUser));
 
         return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
     }

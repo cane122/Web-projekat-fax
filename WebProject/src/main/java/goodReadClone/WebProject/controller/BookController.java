@@ -25,6 +25,8 @@ public class BookController {
     private AuthorService authorService;
     @Autowired
     private ShelfService shelfService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/api/books")
     public List<Book> getBooks(){
@@ -63,7 +65,7 @@ public class BookController {
         for(String auth: newB.getAuthors()){
             authors.add(authorService.findByUsername(auth));
         }
-        Book book = new Book(id, newB.getTitle(), newB.getImage(), newB.getISBN(), newB.getDatePublished(),newB.getPages(), newB.getDescription(), genreService.findByName(newB.getGenre()),authors);
+        Book book = new Book(id, newB.getTitle(), newB.getImage(), newB.getIsbn(), newB.getDatePublished(),newB.getPages(), newB.getDescription(), genreService.findByName(newB.getGenre()),authors);
         bookService.save(book);
 
         return book;
@@ -77,7 +79,7 @@ public class BookController {
             return new ResponseEntity<>("Ne postoji polica ili knjiga", HttpStatus.BAD_REQUEST);
         }
         ShelfInstance si = shelf.getShelfInstanceByBookId(id_book);
-        si.getBook().setISBN(bookdto.getISBN());
+        si.getBook().setISBN(bookdto.getIsbn());
         si.getBook().setDatePublished(bookdto.getDatePublished());
         si.getBook().setImage(bookdto.getImage());
         si.getBook().setGenre(genreService.findByName(bookdto.getGenre()));
@@ -88,5 +90,20 @@ public class BookController {
         shelf.editShelfInstance(si);
         shelfService.save(shelf);
         return new ResponseEntity<>("Uspesno dodata knjiga na policu",HttpStatus.OK);
+    }
+    @PostMapping("/book/addBook/")
+    public ResponseEntity<Book> addBookToRepository(@RequestBody BookDTO book, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        String user_type = (String) session.getAttribute("user_type");
+        if(user_type == null || !user_type.equals("Author")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Set<Author> authors = new HashSet<>();
+        for(String aut: book.getAuthors()){
+            authors.add(authorService.findByUsername(aut));
+        }
+        Book newBook = new Book(book.getTitle(), book.getImage(), book.getIsbn(), book.getDatePublished(),book.getPages(), book.getDescription(), genreService.findByName(book.getGenre()),authors);
+        bookService.save(newBook);
+        return new ResponseEntity<>(newBook,HttpStatus.OK);
     }
 }
