@@ -1,5 +1,6 @@
 package goodReadClone.WebProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,6 +26,7 @@ public class Review implements Serializable {
     private LocalDate reviewDate;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties
     private User user;
 
     public Review(String text, int grade, LocalDate reviewDate) {

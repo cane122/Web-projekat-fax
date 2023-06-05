@@ -73,4 +73,12 @@ public class Shelf implements Serializable {
         }
         return null;
     }
+    public void editShelfInstance(ShelfInstance shelfInstancePassed){
+        for(ShelfInstance si : shelfInstance){
+            if(si.getId().equals(shelfInstancePassed.getId())){
+                si.setBook(shelfInstancePassed.getBook());
+                si.setReview(shelfInstancePassed.getReview());
+            }
+        }
+    }
 }

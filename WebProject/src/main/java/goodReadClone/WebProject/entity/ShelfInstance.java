@@ -27,7 +27,6 @@ public class ShelfInstance implements Serializable {
     }
     public ShelfInstance() {
     }
-
     public void addReview(Review reviewToBeAdded) {
         review = reviewToBeAdded;
     }

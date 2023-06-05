@@ -5,6 +5,8 @@ import goodReadClone.WebProject.repository.ShelfInstanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ShelfInstanceService {
     @Autowired
@@ -16,5 +18,9 @@ public class ShelfInstanceService {
 
     public void delete(Long id) {
         shelfInstanceRepository.deleteById(id);
+    }
+
+    public Optional<ShelfInstance> findById(Long idShelfInstance) {
+        return shelfInstanceRepository.findById(idShelfInstance);
     }
 }

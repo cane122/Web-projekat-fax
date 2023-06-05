@@ -2,9 +2,7 @@ package goodReadClone.WebProject.controller;
 
 import goodReadClone.WebProject.DTO.BookDTO;
 import goodReadClone.WebProject.entity.*;
-import goodReadClone.WebProject.service.AuthorService;
-import goodReadClone.WebProject.service.BookService;
-import goodReadClone.WebProject.service.GenreService;
+import goodReadClone.WebProject.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +23,9 @@ public class BookController {
     private GenreService genreService;
     @Autowired
     private AuthorService authorService;
+    @Autowired
+    private ShelfService shelfService;
+
     @GetMapping("/api/books")
     public List<Book> getBooks(){
         return bookService.findAll();
@@ -69,35 +70,23 @@ public class BookController {
     }
 
     @PutMapping("shelf/{id_shelf}/editBook/{id_book}")
-    public ResponseEntity<String> editBookOnShelf(@PathVariable("id_shelf") Long id_shelf, @PathVariable("id_book") Long id_book, HttpSession session){
+    public ResponseEntity<String> editBookOnShelf(@PathVariable("id_shelf") Long id_shelf, @PathVariable("id_book") Long id_book, @RequestBody BookDTO bookdto, HttpSession session){
         User user = (User) session.getAttribute("user");
         Shelf shelf = user.getShelfById(id_shelf);
-        Optional<Book> book = bookService.findById(id_book);
-        if(shelf == null || book.isEmpty()){
+        if(shelf == null){
             return new ResponseEntity<>("Ne postoji polica ili knjiga", HttpStatus.BAD_REQUEST);
         }
-        int bookOnPrimary = 0;
-        for(Shelf s: user.getShelfs()){
-            for(ShelfInstance si: s.getShelfInstance()){
-                Book knjiga =si.getBook();
-                if(knjiga.getId() == id_book){
-                    if(s.isPrimary()){
-                        bookOnPrimary += 1;
-                    }
-
-                }
-            }
-        }
-        if(bookOnPrimary == 1 && shelf.isPrimary() == true){
-            return new ResponseEntity<>("Moze max na jedan primarni da se stavi",HttpStatus.BAD_REQUEST);
-        }
-        if(bookOnPrimary == 0 && shelf.isPrimary() != true){
-            return new ResponseEntity<>("Ne moze jer nema je na primarnom",HttpStatus.BAD_REQUEST);
-        }
-        ShelfInstance si = new ShelfInstance(book.get());
-        shelf.getShelfInstance().add(si);
-        Shelf newShelf = shelfService.save(shelf);
-        si = shelfInstanceService.save(si);
+        ShelfInstance si = shelf.getShelfInstanceByBookId(id_book);
+        si.getBook().setISBN(bookdto.getISBN());
+        si.getBook().setDatePublished(bookdto.getDatePublished());
+        si.getBook().setImage(bookdto.getImage());
+        si.getBook().setGenre(genreService.findByName(bookdto.getGenre()));
+        si.getBook().setPages(bookdto.getPages());
+        si.getBook().setTitle(bookdto.getTitle());
+        si.getBook().setDescription(bookdto.getDescription());
+        //si.getBook().setListAuthors(bookdto.getAuthors());
+        shelf.editShelfInstance(si);
+        shelfService.save(shelf);
         return new ResponseEntity<>("Uspesno dodata knjiga na policu",HttpStatus.OK);
     }
 }
