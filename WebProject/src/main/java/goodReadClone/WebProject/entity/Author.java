@@ -26,4 +26,8 @@ public class Author extends User {
         this.active = false;
     }
     public Author(){}
+
+    public void addRequest(Request request) {
+        
+    }
 }

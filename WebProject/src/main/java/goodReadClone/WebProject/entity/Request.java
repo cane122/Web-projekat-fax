@@ -40,5 +40,27 @@ public class Request implements Serializable {
     @OneToOne
     private User user;
 
+    public Request(String email, String phone, String message, LocalDate date, String status, User user) {
+        this.email = email;
+        this.phone = phone;
+        this.message = message;
+        this.date = date;
+        this.status = (Status) Enum.valueOf(Status.class,status);
+        this.user = user;
+    }
 
+    public String getStatusString() {
+        switch (status){
+            case WAITING -> {
+                return "WAITING";
+            }
+            case DENIED -> {
+                return "DENIED";
+            }
+            case CONFIRMED -> {
+                return "CONFIRMED";
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + status);
+        }
+    }
 }
