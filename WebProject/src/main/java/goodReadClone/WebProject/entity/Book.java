@@ -32,7 +32,7 @@ public class Book implements Serializable {
     private int pages;
     @Column
     private String description;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.DETACH})
     private Genre genre;
     @ManyToMany
     @JsonManagedReference

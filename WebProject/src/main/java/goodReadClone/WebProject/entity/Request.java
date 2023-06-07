@@ -63,4 +63,20 @@ public class Request implements Serializable {
             default -> throw new IllegalStateException("Unexpected value: " + status);
         }
     }
+
+    public void setStatusString(String accepted) {
+        switch (accepted){
+            case "WAITING" -> {
+                status = Status.WAITING;
+                break;
+            }
+            case "DENIED" -> {
+                status = Status.DENIED;
+            }
+            case "CONFIRMED" -> {
+                status = Status.CONFIRMED;
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + status);
+        }
+    }
 }

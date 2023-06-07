@@ -22,4 +22,16 @@ public class RequestService {
     public List<Request> getRequests() {
         return requestRepository.findAll();
     }
+
+    public void updateRequest(RequestDTO requestDTO, Author author) {
+        Request request = requestRepository.findByEmail(requestDTO.getEmail());
+        request.setStatusString("CONFIRMED");
+        requestRepository.save(request);
+    }
+
+    public void updateRequestDeny(RequestDTO requestDTO, Author author) {
+        Request request = requestRepository.findByEmail(requestDTO.getEmail());
+        request.setStatusString("DENIED");
+        requestRepository.save(request);
+    }
 }

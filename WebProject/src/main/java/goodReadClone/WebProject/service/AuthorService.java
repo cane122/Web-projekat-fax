@@ -26,4 +26,9 @@ public class AuthorService {
     public Optional<Author> findById(Long adminId) {
         return authorRepository.findById(adminId);
     }
+
+    public void authorTurnON(Author author) {
+        author.setActive(true);
+        authorRepository.save(author);
+    }
 }

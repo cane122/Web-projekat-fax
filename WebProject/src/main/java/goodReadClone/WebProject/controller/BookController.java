@@ -115,4 +115,20 @@ public class BookController {
         bookService.save(newBook);
         return new ResponseEntity<>(newBook,HttpStatus.OK);
     }
+    @DeleteMapping("/deleteBook/{book_id}")
+    public ResponseEntity<Book> removeBook(@PathVariable Long book_id, HttpSession session){
+        String user_type = (String) session.getAttribute("user_type");
+        if(user_type == null || !user_type.equals("Admin")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<Book> book = bookService.findById(book_id);
+        if(book.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if(!book.get().getReviews().isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        bookService.remove(book_id);
+        return new ResponseEntity<>(book.get(),HttpStatus.OK);
+    }
 }
