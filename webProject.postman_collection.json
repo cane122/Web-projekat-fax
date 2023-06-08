@@ -1,0 +1,921 @@
+{
+	"info": {
+		"_postman_id": "c01c14f6-4d7d-4456-8ed6-f63aa0dfa68b",
+		"name": "webProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "books",
+			"item": [
+				{
+					"name": "find book title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/The",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"The"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find book auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/findbookbyauthor/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"findbookbyauthor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find all books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/book/0/reviews",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"book",
+								"0",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add book to shelf",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/shelves/6/putBook/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"shelves",
+								"6",
+								"putBook",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove book from shelf",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/shelves/6/deleteBook/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"shelves",
+								"6",
+								"deleteBook",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete book by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/deleteBook/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"deleteBook",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addBook",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Jung\",\n  \"image\": \"book_image.jpg\",\n  \"isbn\": \"978-1-234567-89-0\",\n  \"datePublished\": \"2023-05-20\",\n  \"pages\": 250,\n  \"description\": \"A thrilling adventure through the jungles of an ancient civilization.\",\n  \"genre\": \"Adventure\",\n  \"authors\": [\"bobsmith\"]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/book/addBook/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"book",
+								"addBook",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "genres",
+			"item": [
+				{
+					"name": "genres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/genres",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"genres"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reviews",
+			"item": [
+				{
+					"name": "reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/review/3",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"review",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "write a review",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"grade\": 4,\n\"text\": \"Great experience, highly recommended!\",\n\"reviewDate\": \"2023-06-04\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/shelves/6/addreview/3",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"shelves",
+								"6",
+								"addreview",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit review",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"grade\": 5,\n\"text\": \"AWESOME experience, highly recommended!\",\n\"reviewDate\": \"2023-06-05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/user/edit/review/3",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"user",
+								"edit",
+								"review",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/user/delete/review/3",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"user",
+								"delete",
+								"review",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "login admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {    \"usernameOrEmail\":\"johndoe\",\n    \"password\":\"password123\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"signin"
+							],
+							"query": [
+								{
+									"key": "usernameOrEmail",
+									"value": "johndoe",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login author",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {    \"usernameOrEmail\":\"bobsmith\",\n    \"password\":\"password789\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"signin"
+							],
+							"query": [
+								{
+									"key": "usernameOrEmail",
+									"value": "johndoe",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login bad",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {    \"usernameOrEmail\":\"johndoe\",\n    \"password\":\"password1234\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"signin"
+							],
+							"query": [
+								{
+									"key": "usernameOrEmail",
+									"value": "johndoe",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"markoplayer\",\n  \"lastname\":\"Markovic\",\n  \"username\": \"markoplayer\",\n  \"email\": \"markoplayer@example.com\",\n  \"password\": \"password123\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login registered user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usernameOrEmail\": \"markoplayer@example.com\",\n  \"password\": \"password123\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create author  user already exists",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John\",\n  \"lastname\": \"Doe\",\n  \"username\": \"johndoe\",\n  \"email\": \"johndoe@example.com\",\n  \"password\": \"password123\",\n  \"dateBirth\": \"2022-01-01\",\n  \"image\": \"image.jpg\",\n  \"description\": \"Lorem ipsum dolor sit amet\",\n  \"active\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/admin/createauthor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"admin",
+								"createauthor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create author",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John\",\n  \"lastname\": \"NotDoe\",\n  \"username\": \"johnNotDoe\",\n  \"email\": \"johnnotdoe@example.com\",\n  \"password\": \"password123\",\n  \"dateBirth\": \"2022-01-01\",\n  \"image\": \"image.jpg\",\n  \"description\": \"Lorem ipsum dolor sit amet\",\n  \"active\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/admin/createauthor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"admin",
+								"createauthor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John\",\n  \"lastname\": \"NotDoe\",\n  \"username\": \"johnNotDoe\",\n  \"email\": \"johnnotdoe@example.com\",\n  \"password\": \"password123\",\n  \"dateBirth\": \"2022-01-01\",\n  \"image\": \"image.jpg\",\n  \"description\": \"Lorem ipsum dolor sit amet\",\n  \"active\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Alek\",\n  \"lastname\": \"Pankreas\",\n  \"username\": \"alekpankreas\",\n  \"email\": \"alekpankreas@example.com\",\n  \"password\": \"secretpassword\",\n  \"dateBirth\": \"1990-01-01\",\n  \"image\": \"profile.jpg\",\n  \"description\": \"I'm a book lover!\",\n  \"conformationEmail\" : \"markoplayer@example.com\",\n  \"conformationPassword\":  \"password123\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/user/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit author",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Bob\",\n  \"lastname\": \"Rinkle\",\n  \"username\": \"bobrinkle\",\n  \"email\": \"bob@example.com\",\n  \"password\": \"password123\",\n  \"dateBirth\": \"1990-01-01\",\n  \"image\": \"https://example.com/profile-image\",\n  \"description\": \"I am Bob Rinkle, a passionate individual.\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/author/admin/update/2",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"author",
+								"admin",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "shelves",
+			"item": [
+				{
+					"name": "get shelves",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John\",\n  \"lastname\": \"NotDoe\",\n  \"username\": \"johnNotDoe\",\n  \"email\": \"johnnotdoe@example.com\",\n  \"password\": \"password123\",\n  \"dateBirth\": \"2022-01-01\",\n  \"image\": \"image.jpg\",\n  \"description\": \"Lorem ipsum dolor sit amet\",\n  \"active\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/shelves",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"shelves"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get shelves from user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/users/3/shelfs/",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"users",
+								"3",
+								"shelfs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get logged user shelfs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/shelves/user",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"shelves",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add shelf",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"mamaMia\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/reader/shelves/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"reader",
+								"shelves",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove shelf",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/reader/shelves/remove/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"reader",
+								"shelves",
+								"remove",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit shelf",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"radi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/reader/shelves/edit/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"reader",
+								"shelves",
+								"edit",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "requests",
+			"item": [
+				{
+					"name": "request add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"cankovicognjen@gmail.com\",\n  \"phone\": \"1234567890\",\n  \"message\": \"Hello, I have a question.\",\n  \"date\": \"2023-06-08\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/postRequest/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"postRequest",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/get/requests",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"get",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept request",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/accrequest/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"accrequest",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deny request",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/denyrequest/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"denyrequest",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
