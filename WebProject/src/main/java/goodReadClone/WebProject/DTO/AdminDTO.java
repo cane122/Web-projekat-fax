@@ -17,16 +17,12 @@ public class AdminDTO {
     protected String username;
 
     protected String email;
-    protected String conformationEmail;
 
     protected String password;
-    protected String conformationPassword;
 
     protected LocalDate dateBirth;
 
     protected String image;
 
     protected String description;
-    private boolean active;
-    private Set<Long> listBooksId;
 }

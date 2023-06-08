@@ -31,4 +31,22 @@ public class AuthorService {
         author.setActive(true);
         authorRepository.save(author);
     }
+
+    public Optional<Author> getById(Long authorId) {
+        return authorRepository.findById(authorId);
+    }
+
+    public void save(Author user) {
+        authorRepository.save(user);
+    }
+
+    public boolean authorTurnONById(Long id) {
+        Optional<Author> author = authorRepository.findById(id);
+        if(author.isEmpty()){
+            return false;
+        }
+        author.get().setActive(true);
+        authorRepository.save(author.get());
+        return true;
+    }
 }

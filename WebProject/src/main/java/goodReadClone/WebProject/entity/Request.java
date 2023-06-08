@@ -48,8 +48,12 @@ public class Request implements Serializable {
         this.status = (Status) Enum.valueOf(Status.class,status);
         this.user = user;
     }
+    public Request(){}
 
     public String getStatusString() {
+        if(status == null){
+            return null;
+        }
         switch (status){
             case WAITING -> {
                 return "WAITING";

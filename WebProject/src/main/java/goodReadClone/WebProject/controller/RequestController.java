@@ -25,12 +25,12 @@ public class RequestController {
     @Autowired
     MailService mailService;
     @PostMapping("/postRequest/{author_id}")
-    public ResponseEntity requestAdd(@PathVariable Long admin_id, RequestDTO requestDTO, HttpSession session){
+    public ResponseEntity requestAdd(@PathVariable Long author_id, @RequestBody RequestDTO requestDTO, HttpSession session){
         String user_type = (String) session.getAttribute("user_type");
         if(user_type != null){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        Optional<Author> mirko = authorService.findById(admin_id);
+        Optional<Author> mirko = authorService.findById(author_id);
         if(mirko.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -45,6 +45,9 @@ public class RequestController {
         }
         List<Request> requests = requestService.getRequests();
         for (Request r: requests) {
+            if(r.getStatus() == null){
+                continue;
+            }
             if(!r.getStatusString().equals("WAITING")){
                 requests.remove(r);
             }
@@ -52,35 +55,43 @@ public class RequestController {
         return requests;
     }
     //TODO ISPROBAJ SVE OVO I NAMESTI DA TI MEJL RADI
-    @PatchMapping("/accrequest/{author_id}")
-    public ResponseEntity requestAccept(@PathVariable Long admin_id, RequestDTO requestDTO, HttpSession session){
+    @PatchMapping("/accrequest/{request_id}")
+    public ResponseEntity requestAccept(@PathVariable Long request_id, HttpSession session){
         String user_type = (String) session.getAttribute("user_type");
         if(user_type != "Admin"){
             return null;
         }
-        Optional<Author> mirko = authorService.findById(admin_id);
-        if(mirko.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<Request> request = requestService.getRequestsByID(request_id);
+        if(request.isEmpty()){
+            return null;
         }
-        String text = new String("Cestitam upravo ste dobili nalog autora\n Email:" + mirko.get().getEmail() + "\tSifra:" + mirko.get().getPassword());
-        mailService.sendMail(text,requestDTO.getEmail());
-        authorService.authorTurnON(mirko.get());
-        requestService.updateRequest(requestDTO, mirko.get());
+        Optional<Author> authorOptional = authorService.getById(request.get().getUser().getId());
+        if(authorOptional.isEmpty()){
+            return null;
+        }
+        String text = new String("Cestitam upravo ste dobili nalog autora\n Email:" + authorOptional.get().getEmail()+ "\tSifra:" + authorOptional.get().getPassword());
+        mailService.sendMail(text,request.get().getEmail());
+        authorService.authorTurnONById(request.get().getUser().getId());
+        requestService.updateRequest(request.get());
         return new ResponseEntity(HttpStatus.OK);
     }
-    @PatchMapping("/denyrequest/{author_id}")
-    public ResponseEntity requestDeny(@PathVariable Long admin_id, RequestDTO requestDTO, HttpSession session){
+    @PatchMapping("/denyrequest/{request_id}")
+    public ResponseEntity requestDeny(@PathVariable Long request_id, HttpSession session){
         String user_type = (String) session.getAttribute("user_type");
         if(user_type != "Admin"){
             return null;
         }
-        Optional<Author> mirko = authorService.findById(admin_id);
-        if(mirko.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<Request> request = requestService.getRequestsByID(request_id);
+        if(request.isEmpty()){
+            return null;
+        }
+        Optional<Author> authorOptional = authorService.getById(request.get().getUser().getId());
+        if(authorOptional.isEmpty()){
+            return null;
         }
         String text = new String("Zao mi je ali niste izabrani kao autor, vise srece drugi put");
-        mailService.sendMail(text,requestDTO.getEmail());
-        requestService.updateRequestDeny(requestDTO, mirko.get());
+        mailService.sendMail(text,request.get().getEmail());
+        requestService.updateRequestDeny(request.get());
         return new ResponseEntity(HttpStatus.OK);
     }
 }

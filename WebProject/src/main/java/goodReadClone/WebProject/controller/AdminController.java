@@ -3,23 +3,27 @@ package goodReadClone.WebProject.controller;
 import goodReadClone.WebProject.DTO.AdminDTO;
 import goodReadClone.WebProject.DTO.AuthorDTO;
 import goodReadClone.WebProject.DTO.UserDTO;
+import goodReadClone.WebProject.entity.Author;
 import goodReadClone.WebProject.entity.Reader;
 import goodReadClone.WebProject.entity.User;
+import goodReadClone.WebProject.service.AuthorService;
 import goodReadClone.WebProject.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class AdminController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthorService authorService;
 
     @PostMapping("/admin/createauthor")
     public ResponseEntity<String> createAuthor(@RequestBody AuthorDTO authorDTO, HttpSession session){
@@ -37,9 +41,8 @@ public class AdminController {
 
         return new ResponseEntity<>("Author created successfully!.", HttpStatus.OK);
     }
-    //TODO UPDATE PROFILE AUTHOR zavrsi
-    @PutMapping("/author/admin/update")
-    public ResponseEntity authorUpdate(@RequestBody AdminDTO adminDTO, HttpSession session){
+    @PutMapping("/author/admin/update/{author_id}")
+    public ResponseEntity authorUpdate(@PathVariable Long author_id, @RequestBody AdminDTO adminDTO, HttpSession session){
         String user_type = (String) session.getAttribute("user_type");
         if(user_type == null || !user_type.equals("Admin")){
             return new ResponseEntity<>("Not Admin", HttpStatus.UNAUTHORIZED);
@@ -48,23 +51,23 @@ public class AdminController {
         if(isLogged == null){
             return new ResponseEntity<>("User not logged in", HttpStatus.BAD_REQUEST);
         }
-        if(adminDTO.isActive()) {
-            return new ResponseEntity<>("Admin je vec aktiviran", HttpStatus.UNAUTHORIZED);
-        }
         // create user object
-        Reader user = new Reader();
-        user.setId(isLogged.getId());
-        user.setName(userDTO.getName());
-        user.setLastname(userDTO.getLastname());
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setDateBirth(userDTO.getDateBirth());
-        user.setDescription(userDTO.getDescription());
-        user.setImage(userDTO.getImage());
+        Optional<Author> author = authorService.getById(author_id);
+        if(author.get() == null){
+            return new ResponseEntity("Author not found", HttpStatus.NOT_FOUND);
+        }
+        Author user = author.get();
+        user.setId(author_id);
+        user.setName(adminDTO.getName());
+        user.setLastname(adminDTO.getLastname());
+        user.setUsername(adminDTO.getUsername());
+        user.setEmail(adminDTO.getEmail());
+        user.setPassword(adminDTO.getPassword());
+        user.setDateBirth(adminDTO.getDateBirth());
+        user.setDescription(adminDTO.getDescription());
+        user.setImage(adminDTO.getImage());
 
-        userService.save(user);
-        session.setAttribute("user", user);
+        authorService.save(user);
         return new ResponseEntity<>("User successfully updated", HttpStatus.OK);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RequestService {
@@ -23,15 +24,17 @@ public class RequestService {
         return requestRepository.findAll();
     }
 
-    public void updateRequest(RequestDTO requestDTO, Author author) {
-        Request request = requestRepository.findByEmail(requestDTO.getEmail());
+    public void updateRequest(Request request) {
         request.setStatusString("CONFIRMED");
         requestRepository.save(request);
     }
 
-    public void updateRequestDeny(RequestDTO requestDTO, Author author) {
-        Request request = requestRepository.findByEmail(requestDTO.getEmail());
+    public void updateRequestDeny(Request request) {
         request.setStatusString("DENIED");
         requestRepository.save(request);
+    }
+
+    public Optional<Request> getRequestsByID(Long requestId) {
+        return requestRepository.findById(requestId);
     }
 }

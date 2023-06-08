@@ -12,7 +12,7 @@ import java.util.Properties;
 @Service
 public class MailService {
     public void sendMail(String text, String email) {
-        String from = "cankovicognjen@gmail.com";
+        String from = "webproject2023in@gmail.com";
 
         // Assuming you are sending email from through gmails smtp
         String host = "smtp.gmail.com";
@@ -31,7 +31,7 @@ public class MailService {
 
             protected PasswordAuthentication getPasswordAuthentication() {
 
-                return new PasswordAuthentication("fromaddress@gmail.com", "*******");
+                return new PasswordAuthentication("webproject2023in@gmail.com", "ASDFGHJKL918273");
 
             }
 
