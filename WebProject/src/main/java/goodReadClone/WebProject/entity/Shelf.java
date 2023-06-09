@@ -1,5 +1,7 @@
 package goodReadClone.WebProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,6 +29,10 @@ public class Shelf implements Serializable {
 
     @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ShelfInstance> shelfInstance = new HashSet<>();
+
+    @ManyToOne
+    @JsonBackReference
+    private User user;
 
     public Shelf(String name, boolean primary) {
         this.name = name;

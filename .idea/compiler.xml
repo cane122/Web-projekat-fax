@@ -13,7 +13,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Web-projekat-fax" target="17" />
-      <module name="WebProject" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

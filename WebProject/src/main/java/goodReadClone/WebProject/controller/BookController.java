@@ -79,7 +79,9 @@ public class BookController {
     }
     //TODO SKOntati sta je ovo i sto nam ne treba
     /*
-    @PutMapping("shelf/{id_shelf}/editBook/{id_book}")
+    @PutMapping("shelf/{id_shelf}
+
+   /editBook/{id_book}")
     public ResponseEntity<String> editBookOnShelf(@PathVariable("id_shelf") Long id_shelf, @PathVariable("id_book") Long id_book, @RequestBody BookDTO bookdto, HttpSession session){
         User user = (User) session.getAttribute("user");
         Shelf shelf = user.getShelfById(id_shelf);
