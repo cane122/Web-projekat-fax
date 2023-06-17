@@ -34,8 +34,12 @@ public class Review implements Serializable {
     private User user;
 
     @ManyToOne
+<<<<<<< Updated upstream
     @JsonBackReference
     private Book books;
+=======
+    private Book book;
+>>>>>>> Stashed changes
 
     public Review(String text, int grade, LocalDate reviewDate) {
         this.text = text;
