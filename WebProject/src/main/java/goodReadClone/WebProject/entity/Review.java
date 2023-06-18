@@ -9,8 +9,6 @@ import lombok.ToString;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -34,12 +32,8 @@ public class Review implements Serializable {
     private User user;
 
     @ManyToOne
-<<<<<<< Updated upstream
     @JsonBackReference
     private Book books;
-=======
-    private Book book;
->>>>>>> Stashed changes
 
     public Review(String text, int grade, LocalDate reviewDate) {
         this.text = text;

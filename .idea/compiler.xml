@@ -8,16 +8,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="WebProject" />
-        <module name="Web-projekat-fax" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Web-projekat-fax" target="17" />
+      <module name="WebProject" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Web-projekat-fax" options="-parameters" />
       <module name="WebProject" options="-parameters" />
     </option>
   </component>

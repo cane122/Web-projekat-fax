@@ -1,6 +1,5 @@
 package goodReadClone.WebProject.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -39,12 +38,9 @@ public class Book implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Author> listAuthors = new HashSet<>();
-<<<<<<< Updated upstream
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-=======
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
->>>>>>> Stashed changes
     private Set<Review> reviews = new HashSet<>();
 
     public Book(Long id, String title, String image, String ISBN, Date datePublished, int pages, String description, Genre genre, Set<Author> listAuthors) {
