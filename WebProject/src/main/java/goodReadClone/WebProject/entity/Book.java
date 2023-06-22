@@ -70,4 +70,13 @@ public class Book implements Serializable {
     public void addReview(Review reviewToBeAdded) {
         reviews.add(reviewToBeAdded);
     }
+
+    public boolean deleteReview(Long idReview) {
+        for(Review r: reviews){
+            if(r.getId()== idReview){
+                return reviews.remove(r);
+            }
+        }
+        return false;
+    }
 }

@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
+@CrossOrigin
 public class RequestController {
     @Autowired
     AuthorService authorService;

@@ -14,6 +14,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/shelves")
+@CrossOrigin
 public class ShelfController {
 
     @Autowired

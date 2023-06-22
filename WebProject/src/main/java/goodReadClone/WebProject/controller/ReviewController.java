@@ -1,11 +1,10 @@
 package goodReadClone.WebProject.controller;
 
-import ch.qos.logback.core.spi.AbstractComponentTracker;
 import goodReadClone.WebProject.DTO.ReviewDTO;
-import goodReadClone.WebProject.entity.Reader;
 import goodReadClone.WebProject.entity.Review;
 import goodReadClone.WebProject.entity.ShelfInstance;
 import goodReadClone.WebProject.entity.User;
+import goodReadClone.WebProject.service.BookService;
 import goodReadClone.WebProject.service.ReviewService;
 import goodReadClone.WebProject.service.ShelfInstanceService;
 import jakarta.servlet.http.HttpSession;
@@ -18,11 +17,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class ReviewController {
     @Autowired
     private ReviewService reviewService;
     @Autowired
     private ShelfInstanceService shelfInstanceService;
+    @Autowired
+    private BookService bookService;
 
     @GetMapping("/api/review")
     public List<Review> getReview(){
@@ -58,8 +60,8 @@ public class ReviewController {
         reviewService.save(newReview);
         return new ResponseEntity<>("Review successfully updated", HttpStatus.OK);
     }
-    @DeleteMapping("/user/delete/review/{id_shelfInstance}")
-    public ResponseEntity editReview(@PathVariable Long id_shelfInstance, HttpSession session){
+    @DeleteMapping("/user/delete/review/{idReview}/shelf/{id_shelfInstance}")
+    public ResponseEntity editReview(@PathVariable Long idReview, @PathVariable Long id_shelfInstance, HttpSession session){
         String user_type = (String) session.getAttribute("user_type");
         if(user_type == null || user_type.equals("Admin")){
             return new ResponseEntity<>("Not Reader", HttpStatus.UNAUTHORIZED);
@@ -71,7 +73,7 @@ public class ReviewController {
         if(shelfInstanceService.findById(id_shelfInstance).isEmpty()){
             return new ResponseEntity<>("Shelf instance not found", HttpStatus.BAD_REQUEST);
         }
-        reviewService.deleteReview(id_shelfInstance);
+        reviewService.deleteReview(id_shelfInstance,idReview);
         return new ResponseEntity<>("Review successfully deleted", HttpStatus.OK);
     }
 }

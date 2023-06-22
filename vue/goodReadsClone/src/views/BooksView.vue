@@ -1,83 +1,65 @@
 <template>
-  <div id="allEmployees">
-    <h1>Employees</h1>
-    <button v-on:click="addEmployee">Add new employee</button>
+  <div id="allBooks">
+    <h1>Books</h1>
+    <button v-on:click="addBook">Add new book</button>
     <br /><br />
-    <div class="container-employees">
-      <table id="employees">
+    <div class="container-books">
+      <table id="books">
         <tr>
-          <th>Ime</th>
-          <th>Prezime</th>
-          <th>Pozicija</th>
-          <th>About</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Genre</th>
+          <th>Description</th>
           <th>Delete</th>
           <th>Update</th>
         </tr>
-        <!--<tr v-for="employee in employees" :key="employee.id">
-          <td>{{ employee.firstName }}</td>
-          <td>{{ employee.lastName }}</td>
-          <td>{{ employee.position }}</td>
-          <td>
-            <button class="btnSeeMore" v-on:click="seeMore(employee)">
-              See more
-            </button>
-          </td>
-          <td>
-            <button class="delete" v-on:click="deleteEmployee(employee.id)">
-              Delete
-            </button>
-          </td>
-        </tr>-->
-        <employees-comp
-          v-for="employee in employees"
-          :key="employee.id"
-          :employee="employee"
+        <books-comp
+          v-for="book in books"
+          :key="book.id"
+          :book="book"
         >
-        </employees-comp>
+        </books-comp>
       </table>
     </div>
   </div>
 </template>
 
 <script>
-//import axios from "axios";
-import EmployeesComp from "../components/EmployeesComp.vue";
+// import axios from "axios";
+import BooksComp from "../components/BooksComp.vue";
+
 export default {
-  name: "EmployeesView",
-  components: { EmployeesComp },
-  data: function () {
+  name: "BooksView",
+  components: { BooksComp },
+  data() {
     return {
-      employees: [],
+      books: [],
     };
   },
-  mounted: function () {
-
-    //primer axios poziva
+  mounted() {
+    // Example axios request
     /*axios
-      .get("http://localhost:8081/api/employees")
+      .get("http://localhost:8081/api/books")
       .then((res) => {
-        this.employees = res.data
+        this.books = res.data;
       })
-      .catch((err) =>{
-        console.log(err)
-      })*/
+      .catch((err) => {
+        console.log(err);
+      });*/
 
-      fetch('http://localhost:8081/api/employees')
-        .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.employees = data})
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+    fetch('http://localhost:8081/api/books')
+      .then(response => response.json())
+      .then(data => { console.log("Success:", data); this.books = data; })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   },
   methods: {
-    addEmployee: function() {
-      this.$router.push("/add-employee");
+    addBook() {
+      this.$router.push("/add-book");
     },
-    seeMore: function (employee) {
-      this.$router.push("/employee?id=" + employee.id);
-    },
-    deleteEmployee: function (id) {
-      fetch("http://localhost:8081/api/employees/" + id, {
+    deleteBook(id) {
+      fetch("http://localhost:8081/api/books/" + id, {
         method: "DELETE",
       }).then((res) => {
         if (res.ok) {
@@ -85,8 +67,8 @@ export default {
         }
       });
     },
-    updateEmployee: function() {
-      this.$router.push("/update-employee");
+    updateBook() {
+      this.$router.push("/update-book");
     },
   },
 };
@@ -97,16 +79,12 @@ h1 {
   color: #4caf50;
 }
 
-h3 {
-  color: #4caf50;
-}
-
-.container-employees {
+.container-books {
   display: flex;
   justify-content: center;
 }
 
-#employees th {
+#books th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
@@ -114,17 +92,17 @@ h3 {
   color: white;
 }
 
-#employees td,
-#employees th {
+#books td,
+#books th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#employees tr:nth-child(even) {
+#books tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#employees tr:hover {
+#books tr:hover {
   background-color: #ddd;
 }
 
@@ -140,4 +118,3 @@ h3 {
   font-size: 18px;
 }
 </style>
-

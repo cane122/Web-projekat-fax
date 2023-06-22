@@ -2,6 +2,7 @@ package goodReadClone.WebProject.service;
 
 import goodReadClone.WebProject.entity.Review;
 import goodReadClone.WebProject.entity.ShelfInstance;
+import goodReadClone.WebProject.repository.BookRepository;
 import goodReadClone.WebProject.repository.ReviewRepository;
 import goodReadClone.WebProject.repository.ShelfInstanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
     @Autowired
     private ShelfInstanceRepository shelfInstanceRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
     public List<Review> findAll() {
         return reviewRepository.findAll();
@@ -29,9 +32,13 @@ public class ReviewService {
         reviewRepository.save(reviewToBeAdded);
     }
 
-    public void deleteReview(Long idShelfInstance) {
+    public void deleteReview(Long idShelfInstance, Long idReview) {
         ShelfInstance shelfInstancelocal = shelfInstanceRepository.findById(idShelfInstance).get();
         shelfInstancelocal.setReview(null);
+        shelfInstancelocal.getBook().deleteReview(idReview);
+        bookRepository.save(shelfInstancelocal.getBook());
+        shelfInstanceRepository.save(shelfInstancelocal);
         reviewRepository.deleteById(idShelfInstance);
+
     }
 }

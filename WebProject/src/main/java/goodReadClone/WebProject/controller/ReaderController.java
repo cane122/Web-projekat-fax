@@ -17,6 +17,7 @@ import java.util.NoSuchElementException;
 @Transactional
 @RestController
 @RequestMapping("/reader")
+@CrossOrigin
 public class ReaderController {
     @Autowired
     private ReaderService readerService;

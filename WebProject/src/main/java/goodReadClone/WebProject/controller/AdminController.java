@@ -2,15 +2,12 @@ package goodReadClone.WebProject.controller;
 
 import goodReadClone.WebProject.DTO.AdminDTO;
 import goodReadClone.WebProject.DTO.AuthorDTO;
-import goodReadClone.WebProject.DTO.UserDTO;
 import goodReadClone.WebProject.entity.Author;
-import goodReadClone.WebProject.entity.Reader;
 import goodReadClone.WebProject.entity.User;
 import goodReadClone.WebProject.service.AuthorService;
 import goodReadClone.WebProject.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class AdminController {
 
     @Autowired
