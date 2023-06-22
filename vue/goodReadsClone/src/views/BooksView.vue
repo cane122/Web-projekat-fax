@@ -12,12 +12,10 @@
           <th>Description</th>
           <th>Delete</th>
           <th>Update</th>
+          <th>View</th>
         </tr>
-        <books-comp
-          v-for="book in books"
-          :key="book.id"
-          :book="book"
-        >
+        <books-comp v-for="book in books" :key="book.id" :book="book" @delete="deleteBook" @update="updateBook"
+          @view="viewBook">
         </books-comp>
       </table>
     </div>
@@ -25,7 +23,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 import BooksComp from "../components/BooksComp.vue";
 
 export default {
@@ -49,17 +46,30 @@ export default {
       this.$router.push("/add-book");
     },
     deleteBook(id) {
-      fetch("http://localhost:8081/api/books/" + id, {
+      fetch("http://localhost:9090/deleteBook/" + id, {
         method: "DELETE",
-      }).then((res) => {
-        if (res.ok) {
-          window.location.reload();
-        }
-      });
+      })
+        .then((res) => {
+          if (res.ok) {
+            window.location.reload();
+          } else {
+            alert(res.status);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          console.log("Failed to delete book:", error.message);
+          // Display the error message or perform any other necessary actions
+        });
+
     },
-    updateBook() {
-      this.$router.push("/update-book");
+
+    updateBook(id) {
+      this.$router.push({ path: '/update-book', query: { id: id } });
     },
+    viewBook(id) {
+      this.$router.push({ path: '/book', query: { id: id } });
+    }
   },
 };
 </script>

@@ -10,35 +10,6 @@
 <script>
 export default {
   name: 'App',
-  created() {
-    // Check if a session exists
-    const sessionData = sessionStorage.getItem('session');
-    if (sessionData) {
-      // Session exists, retrieve session data and perform necessary actions
-      const session = JSON.parse(sessionData);
-      // Do something with the session data, such as setting it to a reactive data property
-      this.$data.session = session;
-    } else {
-      // Session does not exist, initialize a new session
-      const newSession = {
-        // Define your session properties here
-        // For example, you can have properties like 'user', 'isLoggedIn', etc.
-        user: null,
-        user_type: null,
-      };
-      // Save the new session to session storage
-      sessionStorage.setItem('session', JSON.stringify(newSession));
-      // Set the session data to a reactive data property
-      this.$data.session = newSession;
-    }
-  },
-  // Other component options
-  data() {
-    return {
-      session: null, // Initialize session as null initially
-      // Other data properties
-    };
-  },
 };
 </script>
 
