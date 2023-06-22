@@ -37,17 +37,7 @@ export default {
     };
   },
   mounted() {
-    // Example axios request
-    /*axios
-      .get("http://localhost:8081/api/books")
-      .then((res) => {
-        this.books = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });*/
-
-    fetch('http://localhost:8081/api/books')
+    fetch('http://localhost:9090/api/books')
       .then(response => response.json())
       .then(data => { console.log("Success:", data); this.books = data; })
       .catch((error) => {

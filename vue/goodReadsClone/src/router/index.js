@@ -33,7 +33,7 @@ const routes = [
     component: AuthorView
   },
   {
-    path: '/add-book-view',
+    path: '/add-book',
     name: 'add-book',
     component: AddBookView
   }

@@ -1,41 +1,43 @@
 <template>
     <div>
-        <h2 style="text-align:center">Employee Profile</h2>
-        <div class="card">
-            <img alt="User" src="../assets/user.png"/>
-            <h1> {{ employee.firstName }} </h1>
-            <h1> {{ employee.lastName }} </h1>
-            <p class="title">{{employee.position}}</p>
-            <br>
-        </div>
+      <h2>Book Profile</h2>
+      <div class="card">
+        <img alt="Book" :src="book.image" />
+        <h1>{{ book.title }}</h1>
+        <p class="title">{{ book.genre }}</p>
+        <p>{{ book.description }}</p>
+        <p>ISBN: {{ book.isbn }}</p>
+        <p>Date Published: {{ formatDate(book.datePublished) }}</p>
+        <p>Pages: {{ book.pages }}</p>
+        <p>Authors: {{ book.authors.join(', ') }}</p>
+      </div>
     </div>
-</template>
-<script>
-    //import axios from "axios";
-    export default {
-        name: 'EmployeeView',
-        data: function() {
-            return {
-                employee: {},
-            }
-        },
-        mounted: function() {
-            /*axios
-                .get("http://localhost:8081/api/employees/" + this.$route.query.id)
-                .then((res) => {
-                    this.employee = res.data
-                })
-                .catch((err) => {
-                    console.log(err)
-                })*/
-    
-            fetch('http://localhost:9090/api/book/' + this.$route.query.id)
-                .then(response => response.json())
-                .then(data => {console.log("Success:", data); this.employee = data})
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
-        }
+  </template>
+  
+  <script>
+  export default {
+    name: 'BookView',
+    data() {
+      return {
+        book: {}
+      };
+    },
+    mounted() {
+      fetch('http://localhost:9090/api/book/' + this.$route.query.id)
+        .then(response => response.json())
+        .then(data => {
+          console.log("Success:", data);
+          this.book = data;
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+    },
+    methods: {
+      formatDate(date) {
+        return new Date(date).toLocaleDateString();
+      }
     }
-    </script>
-    
+  };
+  </script>
+  

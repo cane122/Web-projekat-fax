@@ -31,10 +31,13 @@ export default {
     methods: {
         login() {
             axios.post('http://localhost:9090/signin', this.loginData)
-                .then(() => {
+                .then(response => {
                     // Handle successful login response
                     const loggedInMessage = "User successfully logged in";
                     alert(loggedInMessage);
+
+                    localStorage.setItem('user_type', response.data);
+
                     // Redirect to a specific route
                     this.$router.push('/');
                 })

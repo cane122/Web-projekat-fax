@@ -36,7 +36,7 @@ public class AuthController {
         session.setAttribute("user", loggedUser);
         session.setAttribute("user_type", userService.getUsersRole(loggedUser));
 
-        return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUsersRole(loggedUser), HttpStatus.OK);
     }
 
     @PostMapping("/signup")

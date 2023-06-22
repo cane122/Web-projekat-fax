@@ -44,7 +44,15 @@ public class BookController {
 //        List<Book> searched = bookService.search(param);
 //        return searched;
 //    }
-
+    @GetMapping("/api/book/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable("id") Long id) {
+        Optional<Book> book = bookService.findById(id);
+        if (book.isPresent()) {
+            return new ResponseEntity<>(book.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     @GetMapping("/api/findbookbytitle/{title}")
     public List<Book> getBooksByTitle(@PathVariable("title") String title) {
         return bookService.getRepo().findByTitleContainingIgnoreCase(title);
