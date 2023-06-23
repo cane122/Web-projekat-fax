@@ -157,6 +157,7 @@ public class ShelfController {
         reviewService.save(reviewToBeAdded);
         session.setAttribute("user", user);
         shelfService.save(shelf);
+        bookService.save(shelfInstance.getBook());
 
         return new ResponseEntity<>("Uspesno dodat review", HttpStatus.OK);
     }
