@@ -45,7 +45,7 @@ export default {
         registerUser() {
           console.log(this.user);
 
-          axios.post('/signup', this.user)
+          axios.post('/signup', this.user,{withCredentials:true})
             .then(response => {
               console.log(response.data);
               // Reset the form after successful registration

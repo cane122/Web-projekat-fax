@@ -1,12 +1,6 @@
 <template>
-  <div id="searchUsers">
-    <h1>Search Users</h1>
-    <div class="search-container">
-      <input type="text" v-model="searchQueryGenre" placeholder="Search users genre..." />
-      <button @click="searchUsersGenre">Search genre</button>
-      <input type="text" v-model="searchQueryTitle" placeholder="Search users title..." />
-      <button @click="searchUsersTitle">Search Title</button>
-    </div>
+  <div id="Users">
+    <h1>Users</h1>
     <div v-if="users.length > 0" class="user-list">
       <ul>
         <li v-for="user in users" :key="user.username">
@@ -30,7 +24,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios';
 
@@ -42,19 +35,12 @@ export default {
       users: [],
     };
   },
-  methods: {
+  created() { // Fixed syntax error - changed "created: {" to "created() {"
+    this.searchUsersGenre(); // Call the method to fetch users
+  },
+  methods: { // Added a methods block to define the searchUsersGenre method
     searchUsersGenre() {
-      axios.get(`http://localhost:9090/api/findbookbytitle/${this.searchQueryGenre}`)
-        .then(response => {
-          console.log("Success:", response.data);
-          this.users = response.data;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    },
-    searchUsersTitle() {
-      axios.get(`http://localhost:9090/api/findbookbytitle/${this.searchQueryTitle}`)
+      axios.get(`http://localhost:9090/api/users`)
         .then(response => {
           console.log("Success:", response.data);
           this.users = response.data;
@@ -66,7 +52,6 @@ export default {
   },
 };
 </script>
-
 <style>
 h1 {
   color: #4caf50;
