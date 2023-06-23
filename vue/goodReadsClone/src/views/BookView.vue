@@ -10,6 +10,7 @@
         <p>Date Published: {{ formatDate(book.datePublished) }}</p>
         <p>Pages: {{ book.pages }}</p>
         <p>Authors: {{ book.authors }}</p>
+        <p>Reviews: {{ book.reviews }}</p>
       </div>
     </div>
   </template>

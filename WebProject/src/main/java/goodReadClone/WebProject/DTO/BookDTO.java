@@ -22,5 +22,5 @@ public class BookDTO {
 
     private String genre;
 
-    private Set<String> authors;
+    private String authors;
 }

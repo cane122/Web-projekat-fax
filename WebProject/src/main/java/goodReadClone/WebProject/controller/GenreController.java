@@ -13,7 +13,8 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class GenreController {
-
+    @Autowired
+    private HttpSession httpSession;
     @Autowired
     private GenreService genreService;
 

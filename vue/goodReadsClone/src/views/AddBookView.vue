@@ -1,41 +1,43 @@
 <template>
   <div>
-    <h2>Add Book</h2>
-    <form @submit.prevent="addBook">
+    <h2>Add book</h2>
+    <form @submit.prevent="addbook">
       <label for="title">Title:</label>
-      <input type="text" id="title" v-model="book.title" required>
+      <input type="text" id="title" v-model="bookDTO.title" required>
 
       <label for="image">Image URL:</label>
-      <input type="text" id="image" v-model="book.image" required>
+      <input type="text" id="image" v-model="bookDTO.image" required>
 
       <label for="isbn">ISBN:</label>
-      <input type="text" id="isbn" v-model="book.isbn" required>
+      <input type="text" id="isbn" v-model="bookDTO.isbn" required>
 
       <label for="datePublished">Date Published:</label>
-      <input type="date" id="datePublished" v-model="book.datePublished" required>
+      <input type="date" id="datePublished" v-model="bookDTO.datePublished" required>
 
       <label for="pages">Pages:</label>
-      <input type="number" id="pages" v-model="book.pages" required>
+      <input type="number" id="pages" v-model="bookDTO.pages" required>
 
       <label for="description">Description:</label>
-      <textarea id="description" v-model="book.description" required></textarea>
+      <textarea id="description" v-model="bookDTO.description" required></textarea>
 
       <label for="genre">Genre:</label>
-      <input type="text" id="genre" v-model="book.genre" required>
+      <input type="text" id="genre" v-model="bookDTO.genre" required>
 
       <label for="authors">Authors:</label>
-      <input type="text" id="authors" v-model="book.authors" required>
+      <input type="text" id="authors" v-model="bookDTO.authors" required>
 
-      <button type="submit">Add Book</button>
+      <button type="submit">Add book</button>
     </form>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      book: {
+      bookDTO: {
         title: '',
         image: '',
         isbn: '',
@@ -48,29 +50,26 @@ export default {
     };
   },
   methods: {
-    async addBook() {
+    async addbook() {
       try {
-        const response = await fetch('/api/books', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(this.book),
-        });
+        console.log(this.bookDTO)
+        const response = await axios.post('http://localhost:9090/book/addBook/', this.bookDTO, { withCredentials: true });
 
-        if (response.ok) {
-          // Book added successfully
-          console.log('Book added!');
-          // You can redirect or show a success message here
+        if (response.status === 200) {
+          console.log('book added!');
+          alert("book added")
+          this.$router.push('/books');
         } else {
           console.error('Error adding book');
-          // Handle the error condition
+          alert("error adding book")
+          alert(response)
         }
       } catch (error) {
         console.error('Error adding book', error);
-        // Handle the error condition
+        alert(error)
       }
     },
   },
 };
 </script>
+

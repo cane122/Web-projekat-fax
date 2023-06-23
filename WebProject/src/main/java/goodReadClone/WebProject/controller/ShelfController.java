@@ -16,7 +16,8 @@ import java.util.*;
 @RequestMapping("/shelves")
 @CrossOrigin
 public class ShelfController {
-
+    @Autowired
+    private HttpSession httpSession;
     @Autowired
     private ShelfService shelfService;
     @Autowired

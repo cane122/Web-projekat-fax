@@ -20,6 +20,8 @@ import java.util.Set;
 @CrossOrigin
 public class RequestController {
     @Autowired
+    private HttpSession httpSession;
+    @Autowired
     AuthorService authorService;
     @Autowired
     RequestService requestService;

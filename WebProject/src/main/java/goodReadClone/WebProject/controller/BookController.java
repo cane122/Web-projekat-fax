@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,8 @@ import java.util.Set;
 @RestController
 @CrossOrigin
 public class BookController {
-
+    @Autowired
+    private HttpSession httpSession;
     @Autowired
     private BookService bookService;
     @Autowired
@@ -69,22 +71,21 @@ public class BookController {
     }
 
     @PutMapping("/api/changeBook/{id}")
-    public Book changeBook(BookDTO newB, @PathVariable("id") Long id, HttpSession session){
+    public ResponseEntity<Book> changeBook(BookDTO newB, @PathVariable("id") Long id, HttpSession session){
         String userRole = (String) session.getAttribute("user_type");
         if(userRole == null){
-            return null;
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         if(!userRole.equals("Author") && !userRole.equals("Admin")){
-            return null;
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         Set<Author> authors = new HashSet<>();
-        for(String auth: newB.getAuthors()){
-            authors.add(authorService.findByUsername(auth));
-        }
+        authors.add(authorService.findByUsername(newB.getAuthors()));
+
         Book book = new Book(id, newB.getTitle(), newB.getImage(), newB.getIsbn(), newB.getDatePublished(),newB.getPages(), newB.getDescription(), genreService.findByName(newB.getGenre()),authors);
         bookService.save(book);
 
-        return book;
+        return new ResponseEntity<>(book,HttpStatus.OK);
     }
 
     //TODO SKOntati sta je ovo i sto nam ne treba
@@ -117,9 +118,7 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         Set<Author> authors = new HashSet<>();
-        for(String aut: book.getAuthors()){
-            authors.add(authorService.findByUsername(aut));
-        }
+        authors.add(authorService.findByUsername(book.getAuthors()));
         Book newBook = new Book(book.getTitle(), book.getImage(), book.getIsbn(), book.getDatePublished(),book.getPages(), book.getDescription(), genreService.findByName(book.getGenre()),authors);
         bookService.save(newBook);
         return new ResponseEntity<>(newBook,HttpStatus.OK);

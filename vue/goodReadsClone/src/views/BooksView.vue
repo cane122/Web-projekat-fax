@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import BooksComp from "../components/BooksComp.vue";
 
 export default {
@@ -33,10 +34,12 @@ export default {
       books: [],
     };
   },
-  mounted() {
-    fetch('http://localhost:9090/api/books')
-      .then(response => response.json())
-      .then(data => { console.log("Success:", data); this.books = data; })
+  beforeMount() {
+    axios.get('http://localhost:9090/api/books')
+      .then(response => {
+        console.log("Success:", response.data);
+        this.books = response.data;
+      })
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -46,11 +49,9 @@ export default {
       this.$router.push("/add-book");
     },
     deleteBook(id) {
-      fetch("http://localhost:9090/deleteBook/" + id, {
-        method: "DELETE",
-      })
+      axios.delete("http://localhost:9090/deleteBook/" + id)
         .then((res) => {
-          if (res.ok) {
+          if (res.status === 200) {
             window.location.reload();
           } else {
             alert(res.status);
@@ -61,9 +62,7 @@ export default {
           console.log("Failed to delete book:", error.message);
           // Display the error message or perform any other necessary actions
         });
-
     },
-
     updateBook(id) {
       this.$router.push({ path: '/update-book', query: { id: id } });
     },

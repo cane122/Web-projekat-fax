@@ -20,6 +20,8 @@ import java.util.Optional;
 @CrossOrigin
 public class ReviewController {
     @Autowired
+    private HttpSession httpSession;
+    @Autowired
     private ReviewService reviewService;
     @Autowired
     private ShelfInstanceService shelfInstanceService;

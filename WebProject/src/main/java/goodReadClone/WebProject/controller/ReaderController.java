@@ -20,6 +20,8 @@ import java.util.NoSuchElementException;
 @CrossOrigin
 public class ReaderController {
     @Autowired
+    private HttpSession httpSession;
+    @Autowired
     private ReaderService readerService;
     @Autowired
     private ShelfService shelfService;

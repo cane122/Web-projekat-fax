@@ -17,7 +17,8 @@ import java.util.Optional;
 @RestController
 @CrossOrigin
 public class AdminController {
-
+    @Autowired
+    private HttpSession httpSession;
     @Autowired
     private UserService userService;
     @Autowired

@@ -18,7 +18,8 @@ import java.util.Set;
 @RestController
 @CrossOrigin
 public class UserRestController {
-
+    @Autowired
+    private HttpSession httpSession;
     @Autowired
     private UserService userService;
 

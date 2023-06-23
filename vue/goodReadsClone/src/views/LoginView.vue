@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         login() {
-            axios.post('http://localhost:9090/signin', this.loginData)
+            axios.post('http://localhost:9090/signin', this.loginData, { withCredentials: true })
                 .then(response => {
                     // Handle successful login response
                     const loggedInMessage = "User successfully logged in";
