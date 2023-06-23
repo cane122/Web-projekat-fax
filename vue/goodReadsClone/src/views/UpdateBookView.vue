@@ -70,9 +70,9 @@ export default {
   methods: {
  
   
-  async editBook(id) {
+  async editBook() {
     try {
-      const response = await axios.put(`http://localhost:9090/book/editBook/${id}`, this.bookDTO, { withCredentials: true });
+      const response = await axios.put(`http://localhost:9090/editBook/${this.$route.query.id}`, this.bookDTO, { withCredentials: true });
 
       if (response.status === 200) {
         console.log('Book updated!');

@@ -15,6 +15,9 @@
             <div class="user-image">
               <img :src="user.image" alt="User Image" />
             </div>
+            <div class="user-actions">
+              <button @click="viewUser(user.id)">View</button>
+            </div>
           </div>
         </li>
       </ul>
@@ -24,6 +27,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import axios from 'axios';
 
@@ -35,10 +39,10 @@ export default {
       users: [],
     };
   },
-  created() { // Fixed syntax error - changed "created: {" to "created() {"
-    this.searchUsersGenre(); // Call the method to fetch users
+  created() {
+    this.searchUsersGenre();
   },
-  methods: { // Added a methods block to define the searchUsersGenre method
+  methods: {
     searchUsersGenre() {
       axios.get(`http://localhost:9090/api/users`)
         .then(response => {
@@ -49,6 +53,10 @@ export default {
           console.error("Error:", error);
         });
     },
+    viewUser(id) {
+      // Redirect to the user details page passing the username as a query parameter
+      this.$router.push({ path: '/user-details', query: { id: id } });
+    }
   },
 };
 </script>
