@@ -5,7 +5,11 @@
     <div class="button-group">
       <router-link to="/books" class="btn">Show Books</router-link>
       <router-link to="/login" class="btn">Login</router-link>
+      <router-link to="/unsigned-users" class="btn">Search users</router-link>
       <router-link v-if="author" to="/add-book" class="btn">Add Book</router-link>
+      <router-link to="/register" class="btn">Register</router-link>
+      <router-link to="/search-book" class="btn">Search</router-link>
+      <router-link to="/genres" class="btn">Genres</router-link>
     </div>
   </div>
 </template>

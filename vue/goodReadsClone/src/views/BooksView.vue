@@ -49,7 +49,7 @@ export default {
       this.$router.push("/add-book");
     },
     deleteBook(id) {
-      axios.delete("http://localhost:9090/deleteBook/" + id)
+      axios.delete("http://localhost:9090/deleteBook/" + id, { withCredentials: true })
         .then((res) => {
           if (res.status === 200) {
             window.location.reload();

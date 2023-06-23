@@ -5,6 +5,12 @@ import BookView from '../views/BookView.vue'
 import AuthorView from '../views/AuthorView.vue'
 import BooksView from '../views/BooksView.vue'
 import AddBookView from '../views/AddBookView.vue'
+import UpdateBookView from '../views/UpdateBookView.vue'
+import UnsignedUsersView from '../views/UnsignedUsers.vue'
+import RegisterView from '../views/RegisterView.vue'
+import SearchBookView from '../views/SearchBookView.vue'
+import GenresView from '../views/GenresView.vue'
+import ShelvesView from '../views/Shelves.vue'
 
 const routes = [
   {
@@ -33,9 +39,39 @@ const routes = [
     component: AuthorView
   },
   {
+    path: '/update-book',
+    name: 'update-book',
+    component: UpdateBookView
+  },
+  {
     path: '/add-book',
     name: 'add-book',
     component: AddBookView
+  },
+  {
+    path: '/unsigned-users',
+    name: 'unsigned-users',
+    component: UnsignedUsersView
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView
+  },
+  {
+    path: '/search-book',
+    name: 'search-book',
+    component: SearchBookView
+  },
+  {
+    path: '/genres',
+    name: 'genres',
+    component: GenresView
+  },
+  {
+    path: '/shelves',
+    name: 'shelves',
+    component: ShelvesView
   }
 ]
 

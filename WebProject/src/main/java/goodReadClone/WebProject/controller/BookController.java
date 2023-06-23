@@ -89,24 +89,21 @@ public class BookController {
     }
 
     //TODO SKOntati sta je ovo i sto nam ne treba
-    @PutMapping("shelf/{id_shelf}/editBook/{id_book}")
-    public ResponseEntity<String> editBookOnShelf(@PathVariable("id_shelf") Long id_shelf, @PathVariable("id_book") Long id_book, @RequestBody BookDTO bookdto, HttpSession session){
+    @PutMapping("/editBook/{id_book}")
+    public ResponseEntity<String> editBookOnShelf(@PathVariable("id_book") Long id_book, @RequestBody BookDTO bookdto, HttpSession session){
         User user = (User) session.getAttribute("user");
-        Shelf shelf = user.getShelfById(id_shelf);
-        if(shelf == null){
-            return new ResponseEntity<>("Ne postoji polica ili knjiga", HttpStatus.BAD_REQUEST);
+        Optional<Book> si = bookService.findById(id_book);
+        if(si.isEmpty()){
+            return new ResponseEntity<>("No book",HttpStatus.NOT_FOUND);
         }
-        ShelfInstance si = shelf.getShelfInstanceByBookId(id_book);
-        si.getBook().setISBN(bookdto.getIsbn());
-        si.getBook().setDatePublished(bookdto.getDatePublished());
-        si.getBook().setImage(bookdto.getImage());
-        si.getBook().setGenre(genreService.findByName(bookdto.getGenre()));
-        si.getBook().setPages(bookdto.getPages());
-        si.getBook().setTitle(bookdto.getTitle());
-        si.getBook().setDescription(bookdto.getDescription());
-        //si.getBook().setListAuthors(bookdto.getAuthors());
-        shelf.editShelfInstance(si);
-        shelfService.save(shelf);
+        si.get().setISBN(bookdto.getIsbn());
+        si.get().setDatePublished(bookdto.getDatePublished());
+        si.get().setImage(bookdto.getImage());
+        si.get().setGenre(genreService.findByName(bookdto.getGenre()));
+        si.get().setPages(bookdto.getPages());
+        si.get().setTitle(bookdto.getTitle());
+        si.get().setDescription(bookdto.getDescription());
+        bookService.save(si.get());
         return new ResponseEntity<>("Uspesno dodata knjiga na policu",HttpStatus.OK);
     }
 
