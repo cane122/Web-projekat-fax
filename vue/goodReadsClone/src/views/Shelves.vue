@@ -12,6 +12,8 @@
       <input type="text" v-model="newBook" placeholder="Enter a new book title">
       <button @click="addBook(shelf)">Add Book</button>
     </div>
+    <input type="text" v-model="shelfName" placeholder="Enter a new shelf name">
+    <button @click="addShelf">Add Shelf</button>
   </div>
 </template>
 
@@ -58,6 +60,19 @@ export default {
         this.newBook = '';
       }
     },
+    addShelf() {
+      axios.post('http://localhost:9090/reader/shelves/add', {"name":this.shelfName} ,{ withCredentials: true })
+        .then(response => {
+          // Handle successful response
+          console.log("Shelf added:", response.data);
+          // You can update the shelves list by fetching them again
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error("Error adding shelf:", error);
+          // Handle error case
+        });
+      },
   },
 };
 </script>

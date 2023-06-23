@@ -88,9 +88,6 @@ export default {
           .catch((error) => {
             console.error("Error:", error);
           });
-      } else {
-        // If searchTitle is empty, fetch all books
-        this.fetchBooks();
       }
     },
     searchByAuthor() {
@@ -103,10 +100,7 @@ export default {
           .catch((error) => {
             console.error("Error:", error);
           });
-      } else {
-        // If searchAuthor is empty, fetch all books
-        this.fetchBooks();
-      }
+      } 
     }
   }
 };
