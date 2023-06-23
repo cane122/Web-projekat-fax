@@ -10,6 +10,7 @@
       <router-link to="/register" class="btn">Register</router-link>
       <router-link to="/search-book" class="btn">Search</router-link>
       <router-link to="/genres" class="btn">Genres</router-link>
+      <router-link to="/shelves" class="btn">Shelves</router-link>
     </div>
   </div>
 </template>
