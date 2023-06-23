@@ -6,16 +6,27 @@
       <ul>
         <li v-for="shelfInstance in shelf.shelfInstance" :key="shelfInstance.id">
           {{ shelfInstance.book.title }}
-          <div v-if= "shelfInstance.review !== []">
+          <div v-if="shelfInstance.review !== null">
             {{ shelfInstance.review }}
+            <button @click="openReviewModal(shelfInstance, shelf)">edit Review</button>
+            <div v-if="selectedShelfInstance === shelfInstance">
+              <h3>Edit Review</h3>
+              <input type="number" v-model="editGrade" placeholder="Grade">
+              <textarea v-model="editReviewText" placeholder="Review Text"></textarea>
+              <button @click="editReview">edit Review</button>
+            </div>
           </div>
           <button @click="deleteBook(shelf, shelfInstance.book)">Delete</button>
-          <button @click="openReviewModal(shelfInstance, shelf)">Add Review</button>
-          <div v-if="selectedShelfInstance === shelfInstance">
+          <div v-if="(shelfInstance.review === null)">
+            <button @click="openReviewModal(shelfInstance, shelf)">Add Review</button>
+          </div>
+          <div v-if="(selectedShelfInstance === shelfInstance)">
+            <div v-if="(shelfInstance.review === null)">
             <h3>Add Review</h3>
             <input type="number" v-model="review.grade" placeholder="Grade">
             <textarea v-model="review.text" placeholder="Review Text"></textarea>
             <button @click="saveReview">Save Review</button>
+          </div>
           </div>
         </li>
       </ul>
@@ -136,6 +147,27 @@ export default {
           this.selectedShelfInstance = null;
           this.selectedShelf = null;
           window.location.reload();
+        })
+        .catch(error => {
+          console.error("Error adding review:", error);
+        });
+    },
+    editReview() {
+      const shelfInstanceId = this.selectedShelfInstance.id;
+      const reviewData = {
+        grade: this.editGrade,
+        text: this.editReviewText,
+        reviewDate: new Date().toISOString().split('T')[0] // Get current date
+      };
+
+      axios.put(`http://localhost:9090/user/edit/review/${shelfInstanceId}`, reviewData, { withCredentials: true })
+        .then(response => {
+          // Handle successful review addition
+          console.log("Review edited:", response.data);
+          console.log(reviewData);
+          this.selectedShelfInstance = null;
+          this.selectedShelf = null;
+          //window.location.reload();
         })
         .catch(error => {
           console.error("Error adding review:", error);
