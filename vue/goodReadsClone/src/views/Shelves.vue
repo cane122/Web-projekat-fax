@@ -43,11 +43,22 @@ export default {
 
   methods: {
     deleteBook(shelf, book) {
-      const index = shelf.books.findIndex(b => b.id === book.id);
-      if (index !== -1) {
-        shelf.books.splice(index, 1);
-      }
+      const shelfId = shelf.id;
+      const bookId = book.id;
+
+      axios.delete(`http://localhost:9090/shelves/${shelfId}/deleteBook/${bookId}`, { withCredentials: true })
+        .then(response => {
+          // Handle successful deletion
+          console.log("Book deleted from shelf:", response.data);
+          window.location.reload();
+          // Update the shelves list or perform any necessary actions
+        })
+        .catch(error => {
+          console.error("Error deleting book from shelf:", error);
+          // Handle error case
+        });
     },
+
     addBook(shelf) {
       fetch(`http://localhost:9090/shelves/${shelf.id}/putBook/${this.newBook}`, {
         method: 'PUT',
@@ -65,25 +76,26 @@ export default {
         })
         .then(data => {
           console.log("Book added to shelf:", data);
+          window.location.reload();
         })
         .catch(error => {
           console.error("Error adding book to shelf:", error);
           // Handle error case
         });
-      },
-      addShelf() {
-        axios.post('http://localhost:9090/reader/shelves/add', { "name": this.shelfName }, { withCredentials: true })
-          .then(response => {
-            // Handle successful response
-            console.log("Shelf added:", response.data);
-            // You can update the shelves list by fetching them again
-            window.location.reload();
-          })
-          .catch(error => {
-            console.error("Error adding shelf:", error);
-            // Handle error case
-          });
-      },
     },
-  };
+    addShelf() {
+      axios.post('http://localhost:9090/reader/shelves/add', { "name": this.shelfName }, { withCredentials: true })
+        .then(response => {
+          // Handle successful response
+          console.log("Shelf added:", response.data);
+          // You can update the shelves list by fetching them again
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error("Error adding shelf:", error);
+          // Handle error case
+        });
+    },
+  },
+};
 </script>
