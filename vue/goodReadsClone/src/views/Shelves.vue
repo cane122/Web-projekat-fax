@@ -6,12 +6,24 @@
       <ul>
         <li v-for="shelfInstance in shelf.shelfInstance" :key="shelfInstance.id">
           {{ shelfInstance.book.title }}
+          <div v-if= "shelfInstance.review !== []">
+            {{ shelfInstance.review }}
+          </div>
           <button @click="deleteBook(shelf, shelfInstance.book)">Delete</button>
+          <button @click="openReviewModal(shelfInstance, shelf)">Add Review</button>
+          <div v-if="selectedShelfInstance === shelfInstance">
+            <h3>Add Review</h3>
+            <input type="number" v-model="review.grade" placeholder="Grade">
+            <textarea v-model="review.text" placeholder="Review Text"></textarea>
+            <button @click="saveReview">Save Review</button>
+          </div>
         </li>
       </ul>
       <input type="text" v-model="newBook" placeholder="Enter id of book to add to shelf">
       <button @click="addBook(shelf)">Add Book</button>
     </div>
+    <!-- Review Modal -->
+
     <input type="text" v-model="shelfName" placeholder="Enter a new shelf name">
     <button @click="addShelf">Add Shelf</button>
   </div>
@@ -26,6 +38,13 @@ export default {
   data() {
     return {
       shelves: [],
+      selectedShelfInstance: null,
+      selectedShelf: null,
+      review: {
+        grade: null,
+        text: '',
+        reviewDate: null
+      },
     };
   },
 
@@ -33,6 +52,7 @@ export default {
     axios.get('http://localhost:9090/shelves/user', { withCredentials: true })
       .then(response => {
         this.shelves = response.data;
+        console.log(this.shelves)
         console.log("Success, data: ", response.data);
       })
       .catch(error => {
@@ -58,7 +78,10 @@ export default {
           // Handle error case
         });
     },
-
+    openReviewModal(shelfInstance, shelf) {
+      this.selectedShelfInstance = shelfInstance;
+      this.selectedShelf = shelf;
+    },
     addBook(shelf) {
       fetch(`http://localhost:9090/shelves/${shelf.id}/putBook/${this.newBook}`, {
         method: 'PUT',
@@ -80,7 +103,7 @@ export default {
         })
         .catch(error => {
           console.error("Error adding book to shelf:", error);
-          // Handle error case
+          window.location.reload();
         });
     },
     addShelf() {
@@ -94,6 +117,28 @@ export default {
         .catch(error => {
           console.error("Error adding shelf:", error);
           // Handle error case
+        });
+    },
+    saveReview() {
+      const shelfId = this.selectedShelf.id;
+      const shelfInstanceId = this.selectedShelfInstance.id;
+      const reviewData = {
+        grade: this.review.grade,
+        text: this.review.text,
+        reviewDate: new Date().toISOString().split('T')[0] // Get current date
+      };
+
+      axios.put(`http://localhost:9090/shelves/${shelfId}/addreview/${shelfInstanceId}`, reviewData, { withCredentials: true })
+        .then(response => {
+          // Handle successful review addition
+          console.log("Review added:", response.data);
+          console.log(reviewData);
+          this.selectedShelfInstance = null;
+          this.selectedShelf = null;
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error("Error adding review:", error);
         });
     },
   },
