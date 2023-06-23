@@ -1,8 +1,16 @@
 <template>
   <div id="allBooks">
     <h1>Books</h1>
-    <button v-on:click="addBook">Add new book</button>
+    <button v-if="author" v-on:click="addBook">Add new book</button>
     <br /><br />
+    <div class="search-container">
+      <input v-model="searchTitle" type="text" placeholder="Search by Title" />
+      <button @click="searchByTitle">Search</button>
+    </div>
+    <div class="search-container">
+      <input v-model="searchAuthor" type="text" placeholder="Search by Author" />
+      <button @click="searchByAuthor">Search</button>
+    </div>
     <div class="container-books">
       <table id="books">
         <tr>
@@ -32,6 +40,7 @@ export default {
   data() {
     return {
       books: [],
+      author: localStorage.getItem('user_type') === 'Author'
     };
   },
   beforeMount() {
@@ -68,8 +77,38 @@ export default {
     },
     viewBook(id) {
       this.$router.push({ path: '/book', query: { id: id } });
+    },
+    searchByTitle() {
+      if (this.searchTitle) {
+        axios.get(`http://localhost:9090/api/findbookbytitle/${this.searchTitle}`)
+          .then(response => {
+            console.log("Search Results:", response.data);
+            this.books = response.data;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      } else {
+        // If searchTitle is empty, fetch all books
+        this.fetchBooks();
+      }
+    },
+    searchByAuthor() {
+      if (this.searchAuthor) {
+        axios.get(`http://localhost:9090/api/findbookbyauthor/${this.searchAuthor}`)
+          .then(response => {
+            console.log("Search Results:", response.data);
+            this.books = response.data;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      } else {
+        // If searchAuthor is empty, fetch all books
+        this.fetchBooks();
+      }
     }
-  },
+  }
 };
 </script>
 
