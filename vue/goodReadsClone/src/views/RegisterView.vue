@@ -46,11 +46,11 @@ export default {
       console.log(this.user);
 
       axios.post('http://localhost:9090/signup', this.user, { withCredentials: true })
-        .then(response => {
+        .then(() => {
           const loggedInMessage = "User successfully registered and logged in";
           alert(loggedInMessage);
 
-          localStorage.setItem('user_type', response.data);
+          localStorage.setItem('user_type', "Reader");
 
           // Redirect to a specific route
           this.$router.push('/');

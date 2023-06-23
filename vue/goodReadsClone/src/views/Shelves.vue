@@ -4,9 +4,9 @@
     <div v-for="shelf in shelves" :key="shelf.id">
       <h2>{{ shelf.name }}</h2>
       <ul>
-        <li v-for="book in shelf.books" :key="book.id">
-          {{ book.title }}
-          <button @click="deleteBook(shelf, book)">Delete</button>
+        <li v-for="shelfInstance in shelf.shelfInstance" :key="shelfInstance.id">
+          {{ shelfInstance.book.title }}
+          <button @click="deleteBook(shelf, shelfInstance.book)">Delete</button>
         </li>
       </ul>
       <input type="text" v-model="newBook" placeholder="Enter id of book to add to shelf">
@@ -49,30 +49,41 @@ export default {
       }
     },
     addBook(shelf) {
-      axios.put(`http://localhost:9090/shelves/${shelf.id}/putBook/${this.newBook}`, { withCredentials: true })
-          .then(response => {
-            // Handle successful response
-            console.log("Book added to shelf:", response.data);
-            shelf.books.push(response.data);
-          })
-          .catch(error => {
-            console.error("Error adding book to shelf:", error);
-            // Handle error case
-          });
-    },
-    addShelf() {
-      axios.post('http://localhost:9090/reader/shelves/add', {"name":this.shelfName} ,{ withCredentials: true })
+      fetch(`http://localhost:9090/shelves/${shelf.id}/putBook/${this.newBook}`, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
         .then(response => {
-          // Handle successful response
-          console.log("Shelf added:", response.data);
-          // You can update the shelves list by fetching them again
-          window.location.reload();
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Error adding book to shelf');
+          }
+        })
+        .then(data => {
+          console.log("Book added to shelf:", data);
         })
         .catch(error => {
-          console.error("Error adding shelf:", error);
+          console.error("Error adding book to shelf:", error);
           // Handle error case
         });
       },
-  },
-};
+      addShelf() {
+        axios.post('http://localhost:9090/reader/shelves/add', { "name": this.shelfName }, { withCredentials: true })
+          .then(response => {
+            // Handle successful response
+            console.log("Shelf added:", response.data);
+            // You can update the shelves list by fetching them again
+            window.location.reload();
+          })
+          .catch(error => {
+            console.error("Error adding shelf:", error);
+            // Handle error case
+          });
+      },
+    },
+  };
 </script>
