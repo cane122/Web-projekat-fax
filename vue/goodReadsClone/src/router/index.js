@@ -12,6 +12,7 @@ import SearchBookView from '../views/SearchBookView.vue'
 import GenresView from '../views/GenresView.vue'
 import ShelvesView from '../views/Shelves.vue'
 import UserDetailsView from '../views/UserDetailsView.vue'
+import UpdateUserView from '../views/UpdateUserView.vue'
 
 const routes = [
   {
@@ -78,6 +79,11 @@ const routes = [
     path: '/user-details',
     name: 'user-details',
     component: UserDetailsView
+  },
+  {
+    path: '/update-user',
+    name: 'update-user',
+    component: UpdateUserView
   }
 ]
 

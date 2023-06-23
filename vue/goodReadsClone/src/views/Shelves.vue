@@ -9,7 +9,7 @@
           <button @click="deleteBook(shelf, book)">Delete</button>
         </li>
       </ul>
-      <input type="text" v-model="newBook" placeholder="Enter a new book title">
+      <input type="text" v-model="newBook" placeholder="Enter id of book to add to shelf">
       <button @click="addBook(shelf)">Add Book</button>
     </div>
     <input type="text" v-model="shelfName" placeholder="Enter a new shelf name">
@@ -26,7 +26,6 @@ export default {
   data() {
     return {
       shelves: [],
-      newBook: '',
     };
   },
 
@@ -50,15 +49,16 @@ export default {
       }
     },
     addBook(shelf) {
-      if (this.newBook) {
-        const newId = Math.max(...shelf.books.map(b => b.id)) + 1;
-        const newBook = {
-          id: newId,
-          title: this.newBook,
-        };
-        shelf.books.push(newBook);
-        this.newBook = '';
-      }
+      axios.put(`http://localhost:9090/shelves/${shelf.id}/putBook/${this.newBook}`, { withCredentials: true })
+          .then(response => {
+            // Handle successful response
+            console.log("Book added to shelf:", response.data);
+            shelf.books.push(response.data);
+          })
+          .catch(error => {
+            console.error("Error adding book to shelf:", error);
+            // Handle error case
+          });
     },
     addShelf() {
       axios.post('http://localhost:9090/reader/shelves/add', {"name":this.shelfName} ,{ withCredentials: true })
