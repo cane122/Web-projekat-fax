@@ -8,7 +8,8 @@
                 <p>Email: {{ user.email }}</p>
                 <p>Date of Birth: {{ user.dateBirth }}</p>
                 <p>Description: {{ user.description }}</p>
-                <router-link to="/update-user" class="btn">Update</router-link>
+                <router-link :to="{ path: '/update-user', query: { id: user.id } }" class="btn">Update</router-link>
+
             </div>
             <div class="user-image">
                 <img :src="user.image" alt="User Image" />
