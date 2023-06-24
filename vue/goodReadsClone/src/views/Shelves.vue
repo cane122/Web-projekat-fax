@@ -22,11 +22,11 @@
           </div>
           <div v-if="(selectedShelfInstance === shelfInstance)">
             <div v-if="(shelfInstance.review === null)">
-            <h3>Add Review</h3>
-            <input type="number" v-model="review.grade" placeholder="Grade">
-            <textarea v-model="review.text" placeholder="Review Text"></textarea>
-            <button @click="saveReview">Save Review</button>
-          </div>
+              <h3>Add Review</h3>
+              <input type="number" v-model="review.grade" placeholder="Grade">
+              <textarea v-model="review.text" placeholder="Review Text"></textarea>
+              <button @click="saveReview">Save Review</button>
+            </div>
           </div>
         </li>
       </ul>
@@ -60,19 +60,21 @@ export default {
   },
 
   mounted() {
-    axios.get('http://localhost:9090/shelves/user', { withCredentials: true })
-      .then(response => {
-        this.shelves = response.data;
-        console.log(this.shelves)
-        console.log("Success, data: ", response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
+    this.fetchShelves();
   },
 
   methods: {
+    fetchShelves() {
+      axios.get('http://localhost:9090/shelves/user', { withCredentials: true })
+        .then(response => {
+          this.shelves = response.data;
+          console.log(this.shelves)
+          console.log("Success, data: ", response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     deleteBook(shelf, book) {
       const shelfId = shelf.id;
       const bookId = book.id;
@@ -81,6 +83,7 @@ export default {
         .then(response => {
           // Handle successful deletion
           console.log("Book deleted from shelf:", response.data);
+          this.fetchShelves();
           window.location.reload();
           // Update the shelves list or perform any necessary actions
         })
@@ -110,11 +113,12 @@ export default {
         })
         .then(data => {
           console.log("Book added to shelf:", data);
+          this.fetchShelves();
           window.location.reload();
         })
         .catch(error => {
           console.error("Error adding book to shelf:", error);
-          window.location.reload();
+          this.fetchShelves();
         });
     },
     addShelf() {
@@ -123,6 +127,7 @@ export default {
           // Handle successful response
           console.log("Shelf added:", response.data);
           // You can update the shelves list by fetching them again
+          this.fetchShelves();
           window.location.reload();
         })
         .catch(error => {
@@ -146,6 +151,7 @@ export default {
           console.log(reviewData);
           this.selectedShelfInstance = null;
           this.selectedShelf = null;
+          this.fetchShelves();
           window.location.reload();
         })
         .catch(error => {
@@ -167,7 +173,8 @@ export default {
           console.log(reviewData);
           this.selectedShelfInstance = null;
           this.selectedShelf = null;
-          //window.location.reload();
+          this.fetchShelves();
+          window.location.reload();
         })
         .catch(error => {
           console.error("Error adding review:", error);
