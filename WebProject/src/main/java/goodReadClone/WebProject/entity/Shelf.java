@@ -27,7 +27,7 @@ public class Shelf implements Serializable {
     @Column(name = "is_primary")
     private boolean primary;
 
-    @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ShelfInstance> shelfInstance = new HashSet<>();
 
     @ManyToOne

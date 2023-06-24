@@ -13,9 +13,6 @@ import GenresView from '../views/GenresView.vue'
 import ShelvesView from '../views/Shelves.vue'
 import UserDetailsView from '../views/UserDetailsView.vue'
 import UpdateUserView from '../views/UpdateUserView.vue'
-import NewRequestView from '../views/NewRequestView.vue'
-import RequestsView from '../views/RequestsView.vue'
-// dodati request i new request
 
 const routes = [
   {
@@ -87,16 +84,6 @@ const routes = [
     path: '/update-user',
     name: 'update-user',
     component: UpdateUserView
-  },
-  {
-    path: '/requests',
-    name: 'requests',
-    component: RequestsView
-  },
-  {
-    path: '/new-req',
-    name: 'new-req',
-    component: NewRequestView
   }
 ]
 

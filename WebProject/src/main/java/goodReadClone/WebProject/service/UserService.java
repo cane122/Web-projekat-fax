@@ -69,11 +69,6 @@ public class UserService {
     public void delteShelf(User user){
     }
     public Set<Shelf> getShelves(User user) {
-        Optional<User> marko = userRepository.findByUsername(user.getUsername());
-        if(marko.isEmpty()){
-            return null;
-        }
-        user = marko.get();
         Set<Shelf> results = user.getShelfs();
         for(Shelf s: results) {
             Hibernate.initialize(s.getShelfInstance());

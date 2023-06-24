@@ -46,7 +46,7 @@ import java.util.Set;
     @Column
     protected String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     protected Set<Shelf> shelfs = new HashSet<>();
 

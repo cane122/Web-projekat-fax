@@ -58,14 +58,8 @@ public class ReviewController {
         newReview.setGrade(reviewDTO.getGrade());
         newReview.setText(reviewDTO.getText());
         newReview.setReviewDate(reviewDTO.getReviewDate());
-        shInstance.getReview().setGrade(reviewDTO.getGrade());
-        shInstance.getReview().setReviewDate(reviewDTO.getReviewDate());
-        shInstance.getReview().setText(reviewDTO.getText());
 
         reviewService.save(newReview);
-        reviewService.save(shInstance.getReview());
-        shelfInstanceService.save(shInstance);
-
         return new ResponseEntity<>("Review successfully updated", HttpStatus.OK);
     }
     @DeleteMapping("/user/delete/review/{idReview}/shelf/{id_shelfInstance}")
