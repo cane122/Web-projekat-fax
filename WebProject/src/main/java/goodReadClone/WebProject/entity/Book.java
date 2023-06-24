@@ -39,7 +39,7 @@ public class Book implements Serializable {
     @JsonManagedReference
     private Set<Author> listAuthors = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Set<Review> reviews = new HashSet<>();
 
