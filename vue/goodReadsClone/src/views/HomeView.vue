@@ -10,6 +10,9 @@
       <router-link to="/search-book" class="btn">Search</router-link>
       <router-link to="/genres" class="btn">Genres</router-link>
       <router-link to="/shelves" class="btn">Shelves</router-link>
+      <router-link to="/requests" class="btn">See all Author requests</router-link> <!-- samo admin -->
+      <router-link to="/new-req" class="btn">New Author request</router-link> <!-- samo user/author -->
+
       
     </div>
     <br><br>
