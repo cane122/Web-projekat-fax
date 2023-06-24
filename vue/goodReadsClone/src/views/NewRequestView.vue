@@ -39,9 +39,10 @@
     },
     methods: {
       submitForm() {
-        axios.post('/postRequest/2', this.formData) // Replace with your backend API endpoint for creating requests
+        axios.post('http://localhost:9090/postRequest/2', this.formData) // Replace with your backend API endpoint for creating requests
           .then(response => {
-            console.log("Zahtev poslat na uvid!");
+            alert("Zahtev poslat na uvid!");
+            console.log(response)
           })
           .catch(error => {
             console.error(error);

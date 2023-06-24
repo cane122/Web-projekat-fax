@@ -5,7 +5,7 @@ INSERT INTO USER_APLICATION (dtype, name, lastname, username, email, password, d
 VALUES ('Admin','John', 'Doe', 'johndoe', 'johndoe@example.com', 'password123', '2000-01-01', 'profile.jpg', 'Description of John Doe');
 
 INSERT INTO USER_APLICATION (dtype, name, lastname, username, email, password, date_birth, image, description, active)
-VALUES ('Author', 'Bob', 'Smith', 'bobsmith', 'bobsmith@example.com', 'password789', '1980-10-10', 'baseImage.png', 'Avid reader and book collector', true);
+VALUES ('Author', 'Bob', 'Smith', 'bobsmith', 'bobsmith@example.com', 'password789', '1980-10-10', 'baseImage.png', 'Avid reader and book collector', false);
 
 INSERT INTO Review (grade, text, review_date, user_id) VALUES (4, 'Great book!', '2023-04-19', 1);
 INSERT INTO Review (grade, text, review_date, user_id) VALUES (5, 'This book was just cool 10/10!', '2023-05-19', 1);

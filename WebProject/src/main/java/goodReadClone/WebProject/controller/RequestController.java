@@ -41,10 +41,10 @@ public class RequestController {
         return new ResponseEntity(HttpStatus.OK);
     }
     @GetMapping("/get/requests")
-    public List<Request> getRequestsWaiting(HttpSession session){
+    public ResponseEntity<List<Request>> getRequestsWaiting(HttpSession session){
         String user_type = (String) session.getAttribute("user_type");
         if(user_type != "Admin"){
-            return null;
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         List<Request> requests = requestService.getRequests();
         for (Request r: requests) {
@@ -55,22 +55,22 @@ public class RequestController {
                 requests.remove(r);
             }
         }
-        return requests;
+        return new ResponseEntity(requests,HttpStatus.OK);
     }
     //TODO ISPROBAJ SVE OVO I NAMESTI DA TI MEJL RADI
     @PatchMapping("/accrequest/{request_id}")
     public ResponseEntity requestAccept(@PathVariable Long request_id, HttpSession session){
         String user_type = (String) session.getAttribute("user_type");
         if(user_type != "Admin"){
-            return null;
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         Optional<Request> request = requestService.getRequestsByID(request_id);
         if(request.isEmpty()){
-            return null;
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         Optional<Author> authorOptional = authorService.getById(request.get().getUser().getId());
         if(authorOptional.isEmpty()){
-            return null;
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         String text = new String("Cestitam upravo ste dobili nalog autora\n Email:" + authorOptional.get().getEmail()+ "\tSifra:" + authorOptional.get().getPassword());
         mailService.sendMail(text,request.get().getEmail());
@@ -78,19 +78,20 @@ public class RequestController {
         requestService.updateRequest(request.get());
         return new ResponseEntity(HttpStatus.OK);
     }
+
     @PatchMapping("/denyrequest/{request_id}")
     public ResponseEntity requestDeny(@PathVariable Long request_id, HttpSession session){
         String user_type = (String) session.getAttribute("user_type");
         if(user_type != "Admin"){
-            return null;
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         Optional<Request> request = requestService.getRequestsByID(request_id);
         if(request.isEmpty()){
-            return null;
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         Optional<Author> authorOptional = authorService.getById(request.get().getUser().getId());
         if(authorOptional.isEmpty()){
-            return null;
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         String text = new String("Zao mi je ali niste izabrani kao autor, vise srece drugi put");
         mailService.sendMail(text,request.get().getEmail());

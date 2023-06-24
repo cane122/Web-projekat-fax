@@ -26,27 +26,30 @@
     },
     methods: {
       fetchRequests() {
-        axios.get('/get/requests') // Replace with your backend API endpoint for fetching requests
+        axios.get('http://localhost:9090/get/requests', {withCredentials: true}) // Replace with your backend API endpoint for fetching requests
           .then(response => {
             this.requests = response.data;
+            console.log(this.requests)
           })
           .catch(error => {
             console.error(error);
           });
       },
       acceptRequest(requestId) {
-        axios.post(`/accrequest/${requestId}`) // Replace with your backend API endpoint for accepting a request
+        axios.patch(`http://localhost:9090/accrequest/${requestId}`, {withCredentials: true}) // Replace with your backend API endpoint for accepting a request
           .then(response => {
-            console.log("Prihvacen zahtev!")
+            alert("Prihvacen zahtev!")
+            console.log(response)
           })
           .catch(error => {
             console.error(error);
           });
       },
       denyRequest(requestId) {
-        axios.post(`/denyrequest/${requestId}`) // Replace with your backend API endpoint for denying a request
+        axios.patch(`http://localhost:9090/denyrequest/${requestId}`, {withCredentials: true}) // Replace with your backend API endpoint for denying a request
           .then(response => {
-            console.log("Zahtev uspesno odbijen")
+            alert("Zahtev uspesno odbijen")
+            console.log(response)
           })
           .catch(error => {
             console.error(error);
