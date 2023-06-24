@@ -31,6 +31,11 @@ public class UserRestController {
         return "Hello from api!";
     }
 
+    @GetMapping("/api/getcurrentuser")
+    public User getCurrentUser(HttpSession session){
+        return (User) session.getAttribute("user");
+    }
+
 
     @GetMapping("/api/users")
     public List<User> getUsers(){
