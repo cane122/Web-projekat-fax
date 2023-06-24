@@ -42,6 +42,7 @@ public class ShelfController {
     @GetMapping("/user")
     public Set<Shelf> getShelvesUser(HttpSession session){
         User user = (User) session.getAttribute("user");
+        userService.getShelves(user);
         if(user == null){
             return null;
         }
